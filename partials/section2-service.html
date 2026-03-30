@@ -1,0 +1,64 @@
+<section id="services" class="scroll-mt-[110px] flex w-full justify-center rounded-[20px] lg:mx-0 lg:rounded-none">
+	<div
+		class="mt-[60px] flex w-full max-w-[1300px] min-w-0 flex-col items-start gap-[14px] py-[28px] lg:mt-[80px] lg:gap-[20px] lg:px-[24px] lg:py-[80px]">
+		<h2 class="text-[22px] font-[800] text-[#4F4F4F] lg:text-[32px]">
+			Наши услуги:
+		</h2>
+
+		<p class="text-[#4F4F4F]">
+			Перед лечением необходима консультация специалиста!
+		</p>
+
+		<div id="services-grid" class="grid w-full grid-cols-1 gap-4 lg:grid-cols-3"></div>
+	</div>
+
+	<div data-service-modal-overlay
+		class="pointer-events-none fixed inset-0 z-[80] bg-white/20 opacity-0 backdrop-blur-none transition duration-300">
+		<div class="absolute inset-0" data-service-modal-close></div>
+
+		<div data-service-modal-panel
+			class="absolute inset-x-[16px] top-[20px] bottom-[20px] mx-auto flex max-w-[1140px] -translate-y-4 flex-col overflow-hidden rounded-[28px] bg-white px-[24px] pt-[76px] pb-[28px] opacity-0 shadow-[0_36px_120px_rgba(74,74,74,0.16)] transition duration-300 lg:inset-x-[24px] lg:top-1/2 lg:bottom-auto lg:max-h-[calc(100vh-64px)] lg:w-[min(1040px,calc(100vw-48px))] lg:rounded-[36px] lg:px-[46px] lg:py-[60px]">
+			<div class="flex items-start justify-between gap-[20px]">
+				<div class="pr-[8px]">
+					<h3 data-service-modal-title
+						class="text-[22px] font-[800] leading-[1.1] text-[#4F4F4F] lg:text-[32px]"></h3>
+					<p data-service-modal-description
+						class="mt-[18px] max-w-[700px] text-[16px] font-[500] leading-[1.18] text-[#5B5B5B] lg:mt-[16px] lg:text-[20px]">
+					</p>
+				</div>
+
+				<button type="button" aria-label="Закрыть окно" data-service-modal-close
+					class="absolute right-[24px] top-[28px] lg:right-[32px] lg:top-[32px] flex h-[36px] w-[36px] lg:h-[48px] lg:w-[48px] shrink-0 items-center justify-center rounded-full bg-[#F6F4F2] text-[42px] leading-none text-[#808080] transition-colors duration-200 hover:bg-[#EFEAE6] lg:h-[46px] lg:w-[46px]">
+					<img src="./assets/cross.svg" class="w-auto" />
+				</button>
+			</div>
+
+			<div class="mt-[28px] overflow-auto lg:mt-[36px]">
+				<table
+					class="w-full lg:min-w-[540px] border-separate border-spacing-0 overflow-hidden rounded-[20px] border border-[#B9B0A7] text-left lg:rounded-[28px]">
+					<thead class="bg-[#FBFAF8]">
+						<tr>
+							<th
+								class="w-1/2 border-b border-r border-[#B9B0A7] px-[18px] py-[18px] text-[14px] font-[700] text-[#4F4F4F] lg:px-[20px] lg:py-[19px] lg:text-[20px]">
+								Название услуги
+							</th>
+							<th
+								class="w-1/2 lg:w-[10%] border-b border-[#B9B0A7] px-[18px] py-[18px] text-[14px] font-[700] text-[#4F4F4F] lg:px-[20px] lg:py-[19px] lg:text-[20px]">
+								Цена
+							</th>
+						</tr>
+					</thead>
+					<tbody data-service-modal-table class="bg-white"></tbody>
+				</table>
+			</div>
+
+			<!-- <div class="mt-[18px] flex justify-end">
+				<button type="button" data-contact-modal-open
+					class="lg:h-[52px] shrink-0 lg:rounded-[20px] border border-[#FF7948] px-[16px] inline-flex items-center justify-center gap-[10px] text-[#FF7948] font-[600] text-[16px] lg:text-[18px]">
+					<span>Записаться</span>
+					<img src="./assets/arrowOrangeRight.svg" alt="" class="h-[16px] w-auto" />
+				</button>
+			</div> -->
+		</div>
+	</div>
+</section>

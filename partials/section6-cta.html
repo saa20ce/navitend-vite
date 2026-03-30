@@ -1,0 +1,39 @@
+<section
+	class="bg-[#F4F4F4] bg-cover bg-center lg:bg-[url('/assets/Banner_cta_form.svg')] w-full justify-center flex rounded-[20px] lg:rounded-[0px]">
+	<div
+		class="w-full max-w-[1300px] min-w-[auto] flex flex-row items-start lg:items-center px-[18px] py-[28px] lg:px-[24px] lg:py-[0px] gap-[20px] lg:gap-[20px]">
+		<div class="flex flex-col gap-[16px]">
+			<h2 class="text-[22px] lg:text-[32px] text-[#4F4F4F] font-[800]">Запишитесь на прием</h2>
+			<p class="text-[#4F4F4F] lg:text-[20px]">
+				Оставьте ваш номер телефона —<br />
+				администратор свяжется с вами в течение рабочего дня
+			</p>
+
+			<form data-contact-form class="w-full flex-col lg:flex-row flex gap-[24px] mt-[20px]">
+				<div class="flex-col lg:flex-row flex gap-[16px]">
+					<input type="text" name="name" placeholder="ФИО" required
+						class="px-[16px] lg:min-w-[242px] h-[52px] border-0 rounded-[16px] focus:outline-none focus:ring-2 focus:ring-[#FF7948]/30 focus:border-[#FF7948]" />
+					<input type="tel" name="phone" data-phone-input inputmode="tel" placeholder="+7 (000) 000-00-00"
+						required
+						class="px-[16px] lg:min-w-[242px] h-[52px] border-0 rounded-[16px] focus:outline-none focus:ring-2 focus:ring-[#FF7948]/30 focus:border-[#FF7948]" />
+				</div>
+
+				<button type="submit"
+					class="h-[52px] w-full lg:w-[171px] rounded-[16px] bg-[#FF7948] px-[12px] inline-flex items-center justify-center text-white text-[18px] font-[600] self-end gap-[12px]">
+					Заказать звонок
+				</button>
+			</form>
+
+			<div class="text-[#868686] text-[12px] lg:text-[13px]">
+				Нажимая на кнопку, вы даете согласие на<br class="lg:hidden block" />
+				обработку персональных данных<br class="lg:hidden block" />
+				и соглашаетесь c <a href="#" class="underline underline-offset-[4px]">политикой конфиденциальности</a>
+			</div>
+		</div>
+
+		<div>
+			<img src="./assets/doctor_cta.png" alt="" class="max-w-[494px] hidden lg:block" />
+		</div>
+	</div>
+
+</section>

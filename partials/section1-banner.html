@@ -1,0 +1,40 @@
+<section class="relative mt-4 flex w-full justify-center rounded-[20px] lg:mx-0 lg:rounded-none">
+	<div id="banner-slider"
+		class="relative flex h-[400px] w-full max-w-[1300px] min-w-0 flex-col items-start overflow-hidden rounded-[20px] bg-cover bg-center px-[20px] py-[28px] lg:h-[560px] lg:rounded-[16px] lg:px-[72px] lg:py-[72px]">
+		<div class="relative z-10 flex max-w-[650px] flex-col items-start gap-[14px] lg:gap-[20px]">
+			<h1 id="banner-title" class="text-[24px]/[120%] font-[800] text-[#4F4F4F] lg:text-[48px]/[120%]"></h1>
+
+			<p id="banner-text-1" class="max-w-[600px] text-[14px] font-semibold text-[#4F4F4F] lg:text-[22px]"></p>
+
+			<p id="banner-text-2" class="text-[12px] font-[400] text-[#4F4F4F] lg:text-[20px]"></p>
+
+			<a id="banner-link" href="#" data-contact-modal-open
+				class="mt-1.5 inline-flex h-[45px] w-[107px] items-center justify-center rounded-[16px] border border-[#FF7948] p-[12px] text-[16px] font-[600] text-[#FF7948] lg:h-[52px] lg:w-[131px] lg:text-[18px]">
+				Подробнее
+			</a>
+		</div>
+
+		<img id="banner-image-mobile" src="" alt=""
+			class="absolute bottom-0 right-[-20px] z-10 h-[198px] w-[198px] rounded-e-[20px] lg:hidden" />
+
+		<img id="banner-image-desktop" src="" alt=""
+			class="absolute bottom-[-22px] right-[-70px] z-10 hidden h-[582px] lg:block" />
+
+		<div class="absolute inset-0 z-0 bg-cover bg-center lg:rounded-[16px] rounded-[20px]" id="banner-background">
+		</div>
+	</div>
+
+	<div class="absolute bottom-[-32px] left-1/2 z-20 flex -translate-x-1/2 items-center gap-[28px] lg:bottom-[-64px]">
+		<button id="banner-prev" type="button" aria-label="Предыдущий баннер"
+			class="hidden lg:flex h-[40px] w-[40px] items-center justify-center cursor-pointer">
+			<img src="./assets/chevronLeft.svg" alt="" class="w-[13px] h-[22px]" />
+		</button>
+
+		<div id="banner-dots" class="flex items-center gap-[28px]"></div>
+
+		<button id="banner-next" type="button" aria-label="Следующий баннер"
+			class="hidden lg:flex h-[40px] w-[40px] items-center justify-center cursor-pointer">
+			<img src="./assets/chevronRight.svg" alt="" class="h-auto w-auto" />
+		</button>
+	</div>
+</section>

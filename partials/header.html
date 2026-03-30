@@ -1,0 +1,88 @@
+<header class="sticky top-0 z-50 w-full flex justify-center bg-white">
+	<div class="pt-6 w-full flex justify-center">
+		<div class="w-full max-w-[1300px] min-w-0 flex items-center justify-between px-[24px] py-[14px] bg-[#FEFEFE]">
+			<div class="flex flex-row w-full justify-between lg:justify-start items-center gap-[20px]">
+				<img src="./assets/logo.svg" alt="Навидент" class="h-[26px] lg:h-[32px] w-auto" />
+
+				<div class="lg:hidden flex flex-row items-center gap-[24px]">
+					<img src="./assets/phone.svg" class="h-[24px] w-auto" />
+					<button type="button" aria-label="Открыть меню" aria-expanded="false" data-menu-open
+						class="h-[40px] w-[40px] rounded-[16px] bg-[#FF7948] px-[10px] inline-flex items-center justify-center">
+						<img src="./assets/burgerMenu.svg" class="h-[24px] w-auto" />
+					</button>
+				</div>
+
+				<div class="hidden lg:block w-[1.4px] h-[18px] bg-[#FF7948]"></div>
+
+				<nav data-desktop-menu class="hidden lg:flex items-center gap-[20px] font-[600]"></nav>
+			</div>
+
+			<div class="hidden lg:flex items-center gap-[20px]">
+				<a href="tel:+79835100997"
+					class="text-[18px] min-w-[158px] font-[900] text-[#FF7948] underline decoration-[1px] underline-offset-[4px]">
+					+7 (983) 510-09-97
+				</a>
+
+				<button
+					type="button"
+					data-contact-modal-open
+					class="h-[45px] w-[107px] rounded-[16px] bg-[#FF7948] px-[12px] inline-flex items-center justify-center text-white font-[600] text-[16px]">
+					Записаться
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div data-menu-overlay
+		class="pointer-events-none fixed inset-0 z-[60] bg-white/25 opacity-0 backdrop-blur-none transition duration-300 lg:hidden">
+		<div class="absolute inset-0" data-menu-close></div>
+		<div data-menu-panel
+			class="absolute inset-x-0 top-0 min-h-[88vh] overflow-y-auto rounded-b-[24px] bg-white px-[24px] py-[14px] pt-[38px] shadow-[0_32px_80px_rgba(27,27,27,0.16)] opacity-0 -translate-y-4 transition duration-300">
+			<div class="mx-auto flex w-full max-w-[360px] flex-col">
+				<div class="flex items-center justify-between gap-[20px]">
+					<img src="./assets/logo.svg" alt="Навидент" class="h-[26px] lg:h-[32px] w-auto" />
+					<div class="flex items-center gap-[24px]">
+						<a href="tel:+79835100997" aria-label="Позвонить" class="inline-flex text-[#FF7948]">
+							<img src="./assets/phone.svg" class="h-[24px] w-auto" />
+						</a>
+						<button type="button" aria-label="Закрыть меню" data-menu-close
+							class="h-[40px] w-[40px] rounded-[14px] bg-[#FF7948] text-white inline-flex items-center justify-center text-[26px] leading-none">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+
+				<nav data-mobile-menu class="mt-[30px] flex flex-col"></nav>
+
+				<div class="mt-[34px] text-[#555555]">
+					<p class="text-[16px] font-[800] leading-[1.45]">г. Новосибирск,<br />ул. Балтийская, 31 (Шлюз)</p>
+
+					<div class="mt-[22px] flex flex-col gap-[2px] text-[16px] leading-[1.45]">
+						<a href="tel:+79835100997"
+							class="w-fit text-[#6A6A6A] underline decoration-[1px] underline-offset-[3px]">+7 (983)
+							510-09-97,</a>
+						<a href="tel:+73833090001"
+							class="w-fit text-[#6A6A6A] underline decoration-[1px] underline-offset-[3px]">+7 (383)
+							309-00-01</a>
+					</div>
+
+					<a href="mailto:navident@hotmail.com"
+						class="mt-[18px] inline-block text-[16px] leading-[1.45] text-[#555555]">navident@hotmail.com</a>
+
+					<div class="mt-[28px] flex items-end justify-between gap-[20px]">
+						<div class="text-[15px] leading-[1.7] text-[#555555]">
+							<p><span class="font-[800]">Пн - Пт:</span> 09:00 - 20:00</p>
+							<p><span class="font-[800]">Суб - Вс:</span> 09:00 - 15:00</p>
+						</div>
+
+						<button type="button" data-contact-modal-open
+							class="h-[40px] shrink-0 rounded-[16px] border border-[#FF7948] px-[10px] inline-flex items-center justify-center gap-[8px] text-[#FF7948] font-[600] text-[16px]">
+							<span>Записаться</span>
+							<img src="./assets/arrowOrangeRight.svg" alt="" class="h-[16px] w-auto" />
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
