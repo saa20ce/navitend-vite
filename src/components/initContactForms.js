@@ -116,6 +116,7 @@ export function initContactForms() {
 
       event.preventDefault();
       form.reset();
+      form.dispatchEvent(new CustomEvent("contactform:success"));
     });
 
     if (phoneInput instanceof HTMLInputElement) {

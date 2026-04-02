@@ -48,11 +48,7 @@ export function initContactModal() {
     button.addEventListener("click", closeModal);
   });
 
-  form.addEventListener("submit", (event) => {
-    if (event.defaultPrevented) {
-      return;
-    }
-
+  form.addEventListener("contactform:success", () => {
     closeModal();
   });
 

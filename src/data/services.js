@@ -1,4 +1,4 @@
-export const services = [
+export const servicesData = [
 	{
 		id: "implantation",
 		title: "Имплантация зубов",

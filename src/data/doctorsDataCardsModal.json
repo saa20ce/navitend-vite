@@ -1,0 +1,63 @@
+[
+  {
+    "id": "doctor1",
+    "title": "ШЕСТОКОВА Людмила Алексеевна",
+    "accreditation": [
+      { "name": "Врач стоматолог-терапевт", "date": "2030г" }
+    ],
+    "education": "Новосибирский государственный медицинский университет",
+    "experience": "15 лет",
+    "photo": "./assets/doctor1Full.svg"
+  },
+  {
+    "id": "doctor2",
+    "title": "ТУРИКОВА Светлана Викторовна",
+    "accreditation": [
+      { "name": "Гигиенист стоматологический", "date": "2028г" }
+    ],
+    "education": "Новосибирский медицинский колледж",
+    "experience": "6 лет",
+    "photo": "./assets/doctor2Full.svg"
+  },
+  {
+    "id": "doctor3",
+    "title": "БАЙКОВ Максим Александрович",
+    "accreditation": [
+      { "name": "Рентгенолаборант", "date": "2030г" }
+    ],
+    "education": "Новосибирский медицинский колледж",
+    "experience": "10 лет",
+    "photo": "./assets/doctor3Full.svg"
+  },
+  {
+    "id": "doctor4",
+    "title": "ЛАСКИНА Татьяна Юрьевна",
+    "accreditation": [
+      { "name": "Врач-ортодонт", "date": "2030г" }
+    ],
+    "education": "Новосибирский государственный медицинский университет",
+    "experience": "10 лет",
+    "photo": "./assets/doctor4Full.svg"
+  },
+  {
+    "id": "doctor5",
+    "title": "ПЕНДЕРЕВА Жанна Викторовна",
+    "accreditation": [
+      { "name": "Врач стоматолог-терапевт", "date": "2029г" }
+    ],
+    "education": "Новосибирский государственный медицинский университет",
+    "experience": "29 лет",
+    "photo": "./assets/doctor5Full.svg"
+  },
+  {
+    "id": "doctor6",
+    "title": "ПЕНДЕРЕВ Александр Викторович",
+    "accreditation": [
+      { "name": "Врач стоматолог-хирург", "date": "2028г" },
+      { "name": "Врач стоматолог-ортопед", "date": "2030г" }
+    ],
+    "education": "Новосибирский государственный медицинский университет",
+    "experience": "32 лет",
+    "photo": "./assets/doctor6Full.svg"
+  }
+]
