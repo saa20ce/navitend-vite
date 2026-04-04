@@ -1,5 +1,5 @@
 export function createServiceCard({ id, title, icon }) {
-	return `
+  return `
     <button
       type="button"
       data-service-trigger
@@ -26,6 +26,9 @@ export function createServiceCard({ id, title, icon }) {
 }
 
 export function renderServices(container, services) {
-	if (!container) return;
-	container.innerHTML = services.map(createServiceCard).join("");
+  if (!container) {
+    console.error("Container not found");
+    return;
+  }
+  container.innerHTML = services.map(createServiceCard).join("");
 }

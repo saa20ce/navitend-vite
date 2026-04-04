@@ -3,6 +3,7 @@ export function renderHeaderMenus(menuItems) {
   const mobileMenu = document.querySelector("[data-mobile-menu]");
 
   if (!desktopMenu || !mobileMenu) {
+    console.error("Missing header menu elements");
     return;
   }
 

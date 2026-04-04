@@ -11,7 +11,10 @@ function createDot(index, isActive) {
 }
 
 export function initBannerSlider(slides) {
-	if (!slides?.length) return;
+	if (!slides?.length) {
+		console.error('Missing banner slides');
+		return;
+	}
 
 	const titleEl = document.querySelector('#banner-title');
 	const text1El = document.querySelector('#banner-text-1');
@@ -36,6 +39,7 @@ export function initBannerSlider(slides) {
 		!prevBtn ||
 		!nextBtn
 	) {
+		console.error('Missing banner elements');
 		return;
 	}
 

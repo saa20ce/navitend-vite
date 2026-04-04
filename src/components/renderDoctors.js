@@ -29,6 +29,9 @@ export function createDoctorsCard({ id, surname, name, description, icon }) {
 }
 
 export function renderDoctors(container, doctors) {
-  if (!container) return;
+  if (!container) {
+    console.error("Container not found");
+    return;
+  }
   container.innerHTML = doctors.map(createDoctorsCard).join("");
 }

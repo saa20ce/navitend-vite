@@ -6,6 +6,7 @@ export function initMobileMenu() {
   const menuLinks = document.querySelectorAll("[data-menu-link]");
 
   if (!openButton || !overlay || !panel) {
+    console.error("Missing mobile menu elements");
     return;
   }
 

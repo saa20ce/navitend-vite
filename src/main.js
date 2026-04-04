@@ -12,6 +12,7 @@ import doctors from "../partials/section4-doctors.html?raw";
 import contacts from "../partials/section5-contacts.html?raw";
 import cta from "../partials/section6-cta.html?raw";
 import reviews from "../partials/section7-reviews.html?raw";
+import requisite from "../partials/section8-requisite.html?raw";
 
 // Data
 import { servicesData } from "./data/services";
@@ -21,6 +22,8 @@ import { renderServices } from "./components/renderServices";
 import { doctorsData } from "./data/doctors";
 import doctorsDataCardsModal from "./data/doctorsDataCardsModal";
 import { renderDoctors } from "./components/renderDoctors";
+import { requisitesAccordion } from "./data/requisitesAccordion";
+import { renderRequisitesAccordion } from "./components/renderRequisitesAccordion";
 
 import { menuItems } from "./data/menuItems";
 import { initContactForms } from "./components/initContactForms";
@@ -30,6 +33,7 @@ import { banners } from "./data/banners";
 import { initContactModal } from "./components/initContactModal";
 import { initBannerSlider } from "./components/renderBannerSlider";
 import { initMobileMenu } from "./components/initMobileMenu";
+import { initRequisitesAccordion } from "./components/initRequisitesAccordion";
 import { initServiceModal } from "./components/initServiceModal";
 import { initDoctorsModal } from "./components/initDoctorsModal";
 
@@ -45,6 +49,7 @@ app.innerHTML = `
     ${contacts}
     ${cta}
     ${reviews}
+    ${requisite}
   </main>
   ${footer}
   ${contactModal}
@@ -58,9 +63,13 @@ renderServices(servicesGrid, servicesData);
 const docrotsGrid = document.querySelector("#doctors-grid");
 renderDoctors(docrotsGrid, doctorsData);
 
+const requisitesAccordionContainer = document.querySelector("[data-requisite-accordion]");
+renderRequisitesAccordion(requisitesAccordionContainer, requisitesAccordion);
+
 initContactForms();
 initBannerSlider(banners);
 initContactModal();
 initMobileMenu();
+initRequisitesAccordion();
 initServiceModal(servicePrices);
 initDoctorsModal(doctorsDataCardsModal);

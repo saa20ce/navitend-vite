@@ -57,6 +57,7 @@ export function initDoctorsModal(doctorsData) {
     // !scrollTrigger ||
     !triggers.length
   ) {
+    console.error("Missing doctors modal elements");
     return;
   }
 
@@ -100,6 +101,7 @@ export function initDoctorsModal(doctorsData) {
     const doctor = doctorsMap.get(doctorId);
 
     if (!doctor) {
+      console.error(`Doctor with id ${doctorId} not found`);
       return;
     }
 

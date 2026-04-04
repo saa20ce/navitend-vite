@@ -8,6 +8,7 @@ export function initServiceModal(pricesData) {
   const triggers = document.querySelectorAll("[data-service-trigger]");
 
   if (!overlay || !panel || !title || !description || !tableBody || !triggers.length) {
+    console.error("Missing service modal elements");
     return;
   }
 
@@ -47,6 +48,7 @@ export function initServiceModal(pricesData) {
     const service = pricesMap.get(serviceId);
 
     if (!service) {
+      console.error(`Service with id ${serviceId} not found`);
       return;
     }
 

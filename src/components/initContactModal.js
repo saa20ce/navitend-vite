@@ -6,6 +6,7 @@ export function initContactModal() {
   const triggers = document.querySelectorAll("[data-contact-modal-open]");
 
   if (!overlay || !panel || !form || !triggers.length) {
+    console.error("Missing contact modal elements");
     return;
   }
 
