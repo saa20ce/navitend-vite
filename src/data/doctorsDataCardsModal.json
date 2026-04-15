@@ -21,13 +21,13 @@
   },
   {
     "id": "doctor3",
-    "title": "БАЙКОВ Максим Александрович",
+    "title": "ШЕЙКНЕХТ Максим Александрович",
     "accreditation": [
       { "name": "Рентгенолаборант", "date": "2030г" }
     ],
-    "education": "Новосибирский медицинский колледж",
-    "experience": "10 лет",
-    "photo": "./assets/doctor3Full.svg"
+    "education": "Институт переподготовки и повышения квалификации специалистов здравоохранения",
+    "experience": "6 лет",
+    "photo": "./assets/doctor3Full.png"
   },
   {
     "id": "doctor4",

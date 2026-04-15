@@ -13,6 +13,7 @@ import contacts from "../partials/section5-contacts.html?raw";
 import cta from "../partials/section6-cta.html?raw";
 import reviews from "../partials/section7-reviews.html?raw";
 import requisite from "../partials/section8-requisite.html?raw";
+import licensesSection from "../partials/section9-licenses.html?raw";
 
 // Data
 import { servicesData } from "./data/services";
@@ -22,6 +23,7 @@ import { renderServices } from "./components/renderServices";
 import { doctorsData } from "./data/doctors";
 import doctorsDataCardsModal from "./data/doctorsDataCardsModal";
 import { renderDoctors } from "./components/renderDoctors";
+import { licenses } from "./data/licenses";
 import { requisitesAccordion } from "./data/requisitesAccordion";
 import { renderRequisitesAccordion } from "./components/renderRequisitesAccordion";
 
@@ -32,6 +34,7 @@ import { renderHeaderMenus } from "./components/renderHeaderMenus";
 import { banners } from "./data/banners";
 import { initContactModal } from "./components/initContactModal";
 import { initBannerSlider } from "./components/renderBannerSlider";
+import { initLicensesSlider } from "./components/initLicensesSlider";
 import { initMobileMenu } from "./components/initMobileMenu";
 import { initRequisitesAccordion } from "./components/initRequisitesAccordion";
 import { initServiceModal } from "./components/initServiceModal";
@@ -50,6 +53,7 @@ app.innerHTML = `
     ${cta}
     ${reviews}
     ${requisite}
+    ${licensesSection}
   </main>
   ${footer}
   ${contactModal}
@@ -71,5 +75,6 @@ initBannerSlider(banners);
 initContactModal();
 initMobileMenu();
 initRequisitesAccordion();
+initLicensesSlider(licenses);
 initServiceModal(servicePrices);
 initDoctorsModal(doctorsDataCardsModal);
