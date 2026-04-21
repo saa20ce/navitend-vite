@@ -49,7 +49,7 @@ export function initLicensesSlider(items) {
             class="licenses-slide shrink-0 bg-transparent"
             data-licenses-slide-link
           >
-            <div class="flex h-[100%] items-center justify-center overflow-hidden bg-white lg:h-[620px]">
+            <div class="flex h-[100%] items-center justify-center overflow-hidden bg-white">
               <img src="${src}" alt="${alt}" class="h-full w-full object-contain" />
             </div>
           </a>

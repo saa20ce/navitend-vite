@@ -2,7 +2,7 @@ export const requisitesAccordion = [
   {
     id: "clinic-details",
     title: "Реквизиты клиники:",
-    isOpen: true,
+    isOpen: false,
     content: `
       <div class="space-y-[12px] text-[14px] leading-[1.2] text-[#9A9A9A] lg:text-[18px]">
         <p>ООО "Навидент"<br />ИНН 5404443945 <br />КПП 540801001 <br />р/с 40702810123120000058 <br />ОКВЭД- 85,13 <br />ОКПО - 30730569 <br />ОГРН 1115476099925</p>
