@@ -1,16 +1,16 @@
 export const doctorsData = [
 	{
 		id: "doctor1",
-		surname: "ШЕСТОКОВА",
+		surname: "ШЕСТАКОВА",
 		name: "Людмила Алексеевна",
-		description: "Врач стоматолог-терапевт",
+		description: "Врач - стоматолог терапевт",
 		icon: "./assets/doctor1.png",
 	},
 	{
 		id: "doctor2",
 		surname: "ТУРИКОВА",
 		name: "Светлана Викторовна",
-		description: "Гигиенист стоматологический",
+		description: "Гигиенист стоматолог",
 		icon: "./assets/doctor2.png",
 	},
 	{
@@ -24,21 +24,21 @@ export const doctorsData = [
 		id: "doctor4",
 		surname: "ЛАСКИНА",
 		name: "Татьяна Юрьевна",
-		description: "Врач-ортодонт",
+		description: "Врач - стоматолог ортодонт",
 		icon: "./assets/doctor4.png",
 	},
 	{
 		id: "doctor5",
 		surname: "ПЕНДЕРЕВА",
 		name: "Жанна Викторовна",
-		description: "Врач стоматолог-терапевт",
+		description: "Врач - стоматолог терапевт",
 		icon: "./assets/doctor5.png",
 	},
 	{
 		id: "doctor6",
 		surname: "ПЕНДЕРЕВ",
 		name: "Александр Викторович",
-		description: "Врач-стоматолог",
+		description: "Врач - стоматолог хирург <br> Врач - стоматолог ортопед",
 		icon: "./assets/doctor6.png",
 	},
 ];
