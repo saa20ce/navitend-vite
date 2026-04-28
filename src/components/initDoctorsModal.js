@@ -18,7 +18,7 @@ function renderAccreditation(items) {
           <span class="mt-[6px] h-[7px] w-[7px] shrink-0 rounded-full bg-[#5A5A5A]"></span>
           <div>
             <p class="text-[18px] font-[700] leading-[1.18] text-[#575757]">${name}</p>
-            <p class="mt-[8px] text-[18px] leading-[1.12] text-[#8A8A8A]">РђРєРєСЂРµРґРёС‚Р°С†РёСЏ РґРѕ ${date.replace(/Рі\.?$/, " Рі.")}</p>
+            <p class="mt-[8px] text-[18px] leading-[1.12] text-[#8A8A8A]">Аккредитация до ${date.replace(/Рі\.?$/, " Рі.")}</p>
           </div>
         </li>
       `,
@@ -95,7 +95,7 @@ export function initDoctorsModal(doctorsData) {
     surname.textContent = titleParts.surname;
     name.textContent = titleParts.name;
     doctorField.value = doctor.title;
-    experience.textContent = `РћРїС‹С‚ СЂР°Р±РѕС‚С‹: ${doctor.experience}`;
+    experience.textContent = `Опыт работы: ${doctor.experience}`;
     list.innerHTML = renderAccreditation(doctor.accreditation);
     education.textContent = doctor.education;
 
