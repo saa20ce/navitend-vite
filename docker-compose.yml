@@ -1,0 +1,30 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    networks:
+      - app-network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "3001:3001"
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - VMESS_URL=${VMESS_URL}
+      - SUBSCRIPTION_URL=${SUBSCRIPTION_URL}
+      - TELEGRAM_PROXY_URL=${TELEGRAM_PROXY_URL}
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

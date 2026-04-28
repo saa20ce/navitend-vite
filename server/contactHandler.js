@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { SocksProxyAgent } from 'socks-proxy-agent';
+
 function setJsonHeaders(res) {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
   res.setHeader("Cache-Control", "no-store");
@@ -38,18 +41,13 @@ function getTelegramMessage(payload) {
     "",
     `Имя: ${payload.name}`,
     `Телефон: ${payload.phone}`,
-    `Источник: ${payload.source || "site-form"}`,
   ];
 
   if (payload.doctor) {
     lines.push(`Врач: ${payload.doctor}`);
   }
 
-  if (payload.pageUrl) {
-    lines.push(`Страница: ${payload.pageUrl}`);
-  }
-
-  lines.push(`Время: ${new Date().toLocaleString("ru-RU", { timeZone: "Asia/Novosibirsk" })}`);
+  lines.push(`Дата: ${new Date().toLocaleString("ru-RU", { timeZone: "Asia/Novosibirsk" })}`);
 
   return lines.join("\n");
 }
@@ -68,6 +66,31 @@ function validatePayload(payload) {
   }
 
   return null;
+}
+
+function getTelegramRequestOptions() {
+  const options = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const proxyUrl = process.env.TELEGRAM_PROXY_URL || process.env.SOCKS_PROXY_URL;
+
+  if (proxyUrl) {
+    options.httpsAgent = new SocksProxyAgent(proxyUrl);
+  }
+
+  return options;
+}
+
+function getRequestErrorDetails(error) {
+  return {
+    message: error.message,
+    code: error.code,
+    status: error.response?.status,
+    response: error.response?.data,
+    cause: error.cause?.message,
+  };
 }
 
 export async function handleContactRequest(req, res) {
@@ -99,20 +122,14 @@ export async function handleContactRequest(req, res) {
       return;
     }
 
-    const telegramResponse = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: getTelegramMessage(payload),
-      }),
-    });
+    const telegramResponse = await axios.post(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      chat_id: chatId,
+      text: getTelegramMessage(payload),
+    }, getTelegramRequestOptions());
 
-    const telegramResult = await telegramResponse.json().catch(() => ({}));
+    const telegramResult = telegramResponse.data;
 
-    if (!telegramResponse.ok || !telegramResult.ok) {
+    if (telegramResponse.status !== 200 || !telegramResult.ok) {
       console.error("Telegram API error:", telegramResult);
       sendJson(res, 502, { error: "Не удалось отправить заявку в Telegram." });
       return;
@@ -120,7 +137,7 @@ export async function handleContactRequest(req, res) {
 
     sendJson(res, 200, { ok: true });
   } catch (error) {
-    console.error("Contact API error:", error);
+    console.error("Contact API error:", getRequestErrorDetails(error));
     sendJson(res, 500, { error: "Внутренняя ошибка сервера." });
   }
 }
