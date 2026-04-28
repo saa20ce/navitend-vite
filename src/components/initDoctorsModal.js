@@ -18,7 +18,7 @@ function renderAccreditation(items) {
           <span class="mt-[6px] h-[7px] w-[7px] shrink-0 rounded-full bg-[#5A5A5A]"></span>
           <div>
             <p class="text-[18px] font-[700] leading-[1.18] text-[#575757]">${name}</p>
-            <p class="mt-[8px] text-[18px] leading-[1.12] text-[#8A8A8A]">Аккредитация до ${date.replace(/г\.?$/, " г.")}</p>
+            <p class="mt-[8px] text-[18px] leading-[1.12] text-[#8A8A8A]">РђРєРєСЂРµРґРёС‚Р°С†РёСЏ РґРѕ ${date.replace(/Рі\.?$/, " Рі.")}</p>
           </div>
         </li>
       `,
@@ -36,9 +36,8 @@ export function initDoctorsModal(doctorsData) {
   const list = document.querySelector("[data-doctor-modal-list]");
   const education = document.querySelector("[data-doctor-modal-education]");
   const form = document.querySelector("[data-doctor-modal-form]");
+  const doctorField = document.querySelector("[data-doctor-name-field]");
   const formSection = document.querySelector("[data-doctor-modal-form-section]");
-  // const mobileCta = document.querySelector("[data-doctor-modal-mobile-cta]");
-  // const scrollTrigger = document.querySelector("[data-doctor-modal-scroll-trigger]");
   const closeButtons = document.querySelectorAll("[data-doctor-modal-close]");
   const triggers = document.querySelectorAll("[data-doctor-trigger]");
 
@@ -52,9 +51,8 @@ export function initDoctorsModal(doctorsData) {
     !list ||
     !education ||
     !form ||
+    !doctorField ||
     !formSection ||
-    // !mobileCta ||
-    // !scrollTrigger ||
     !triggers.length
   ) {
     console.error("Missing doctors modal elements");
@@ -62,20 +60,6 @@ export function initDoctorsModal(doctorsData) {
   }
 
   const doctorsMap = new Map(doctorsData.map((doctor) => [doctor.id, doctor]));
-
-  // const updateMobileCtaVisibility = () => {
-  //   if (window.innerWidth >= 1024) {
-  //     mobileCta.classList.add("opacity-0", "pointer-events-none");
-  //     return;
-  //   }
-
-  //   const panelRect = panel.getBoundingClientRect();
-  //   const formRect = formSection.getBoundingClientRect();
-  //   const isFormReached = formRect.top <= panelRect.bottom - 120;
-
-  //   mobileCta.classList.toggle("opacity-0", isFormReached);
-  //   mobileCta.classList.toggle("pointer-events-none", isFormReached);
-  // };
 
   const setModalState = (isOpen) => {
     overlay.classList.toggle("pointer-events-none", !isOpen);
@@ -93,7 +77,6 @@ export function initDoctorsModal(doctorsData) {
 
     if (isOpen) {
       panel.scrollTo({ top: 0, behavior: "auto" });
-      // updateMobileCtaVisibility();
     }
   };
 
@@ -111,7 +94,8 @@ export function initDoctorsModal(doctorsData) {
     photo.alt = doctor.title;
     surname.textContent = titleParts.surname;
     name.textContent = titleParts.name;
-    experience.textContent = `Опыт работы: ${doctor.experience}`;
+    doctorField.value = doctor.title;
+    experience.textContent = `РћРїС‹С‚ СЂР°Р±РѕС‚С‹: ${doctor.experience}`;
     list.innerHTML = renderAccreditation(doctor.accreditation);
     education.textContent = doctor.education;
 
@@ -119,6 +103,7 @@ export function initDoctorsModal(doctorsData) {
   };
 
   const closeModal = () => {
+    doctorField.value = "";
     setModalState(false);
   };
 
@@ -131,13 +116,6 @@ export function initDoctorsModal(doctorsData) {
   closeButtons.forEach((button) => {
     button.addEventListener("click", closeModal);
   });
-
-  // scrollTrigger.addEventListener("click", () => {
-  //   formSection.scrollIntoView({ behavior: "smooth", block: "start" });
-  // });
-
-  // panel.addEventListener("scroll", updateMobileCtaVisibility);
-  // window.addEventListener("resize", updateMobileCtaVisibility);
 
   form.addEventListener("contactform:success", closeModal);
 

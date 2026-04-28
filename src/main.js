@@ -34,6 +34,7 @@ import { renderHeaderMenus } from "./components/renderHeaderMenus";
 import { banners } from "./data/banners";
 import { initContactModal } from "./components/initContactModal";
 import { initBannerSlider } from "./components/renderBannerSlider";
+import { initDoctorsSlider } from "./components/initDoctorsSlider";
 import { initLicensesSlider } from "./components/initLicensesSlider";
 import { initMobileMenu } from "./components/initMobileMenu";
 import { initRequisitesAccordion } from "./components/initRequisitesAccordion";
@@ -65,7 +66,8 @@ const servicesGrid = document.querySelector("#services-grid");
 renderServices(servicesGrid, servicesData);
 
 const docrotsGrid = document.querySelector("#doctors-grid");
-renderDoctors(docrotsGrid, doctorsData);
+const doctorsMobileTrack = document.querySelector("[data-doctors-track]");
+renderDoctors(docrotsGrid, doctorsData, doctorsMobileTrack);
 
 const requisitesAccordionContainer = document.querySelector("[data-requisite-accordion]");
 renderRequisitesAccordion(requisitesAccordionContainer, requisitesAccordion);
@@ -73,6 +75,7 @@ renderRequisitesAccordion(requisitesAccordionContainer, requisitesAccordion);
 initContactForms();
 initBannerSlider(banners);
 initContactModal();
+initDoctorsSlider(doctorsData);
 initMobileMenu();
 initRequisitesAccordion();
 initLicensesSlider(licenses);

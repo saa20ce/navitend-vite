@@ -9,7 +9,7 @@
 				администратор свяжется с вами в течение рабочего дня
 			</p>
 
-			<form data-contact-form class="w-full flex-col lg:flex-row flex gap-[24px] mt-[20px]">
+			<form data-contact-form data-form-source="cta-section" class="w-full flex-col lg:flex-row flex gap-[24px] mt-[20px]">
 				<div class="flex-col lg:flex-row flex gap-[16px]">
 					<input type="text" name="name" placeholder="ФИО" required
 						class="px-[16px] lg:min-w-[242px] h-[52px] border-0 rounded-[16px] focus:outline-none focus:ring-2 focus:ring-[#FF7948]/30 focus:border-[#FF7948]" />
@@ -19,7 +19,7 @@
 				</div>
 
 				<button type="submit"
-					class="h-[52px] w-full lg:w-[171px] rounded-[16px] bg-[#FF7948] px-[12px] inline-flex items-center justify-center text-white text-[18px] font-[600] self-end gap-[12px]">
+					class="h-[52px] w-full lg:w-[171px] rounded-[16px] bg-[#FF7948] px-[12px] inline-flex items-center justify-center text-white text-[18px] font-[600] self-end gap-[12px] transition-colors duration-200 hover:bg-[#FF946D]">
 					Заказать звонок
 				</button>
 			</form>

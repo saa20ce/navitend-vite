@@ -1,4 +1,5 @@
 const PHONE_DIGITS_COUNT = 11;
+const API_ENDPOINT = "/api/contact";
 
 function getDigits(value) {
   return value.replace(/\D/g, "");
@@ -75,6 +76,96 @@ function validateForm(form) {
   return true;
 }
 
+function getStatusElement(form) {
+  let statusElement = form.querySelector("[data-contact-form-status]");
+
+  if (!(statusElement instanceof HTMLElement)) {
+    statusElement = document.createElement("p");
+    statusElement.dataset.contactFormStatus = "true";
+    statusElement.className =
+      "mt-[12px] w-full basis-full text-[14px] leading-[1.4] text-[#6A6A6A]";
+    form.append(statusElement);
+  }
+
+  return statusElement;
+}
+
+function setStatus(form, message, type = "neutral") {
+  const statusElement = getStatusElement(form);
+
+  statusElement.textContent = message;
+  statusElement.classList.remove("text-[#6A6A6A]", "text-[#27AE60]", "text-[#D64545]");
+
+  if (type === "success") {
+    statusElement.classList.add("text-[#27AE60]");
+    return;
+  }
+
+  if (type === "error") {
+    statusElement.classList.add("text-[#D64545]");
+    return;
+  }
+
+  statusElement.classList.add("text-[#6A6A6A]");
+}
+
+function getFormPayload(form) {
+  const formData = new FormData(form);
+
+  return {
+    name: String(formData.get("name") || "").trim(),
+    phone: String(formData.get("phone") || "").trim(),
+    source: form.dataset.formSource || "site-form",
+    doctor: String(formData.get("doctor") || "").trim(),
+    pageUrl: window.location.href,
+  };
+}
+
+async function submitContactForm(form) {
+  const submitButton = form.querySelector('button[type="submit"]');
+  const initialButtonText = submitButton?.textContent ?? "";
+
+  if (submitButton instanceof HTMLButtonElement) {
+    submitButton.disabled = true;
+    submitButton.textContent = "Отправляем...";
+    submitButton.classList.add("opacity-70", "cursor-not-allowed");
+  }
+
+  setStatus(form, "Отправляем заявку...");
+
+  try {
+    const response = await fetch(API_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(getFormPayload(form)),
+    });
+
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(result.error || "Не удалось отправить заявку.");
+    }
+
+    setStatus(form, "Заявка отправлена. Мы скоро свяжемся с вами.", "success");
+    form.reset();
+    form.dispatchEvent(new CustomEvent("contactform:success"));
+  } catch (error) {
+    setStatus(
+      form,
+      error instanceof Error ? error.message : "Не удалось отправить заявку. Попробуйте еще раз.",
+      "error",
+    );
+  } finally {
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.disabled = false;
+      submitButton.textContent = initialButtonText;
+      submitButton.classList.remove("opacity-70", "cursor-not-allowed");
+    }
+  }
+}
+
 export function initContactForms() {
   const forms = document.querySelectorAll("[data-contact-form]");
   const phoneInputs = document.querySelectorAll("[data-phone-input]");
@@ -108,15 +199,14 @@ export function initContactForms() {
       });
     }
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
       if (!validateForm(form)) {
-        event.preventDefault();
         return;
       }
 
-      event.preventDefault();
-      form.reset();
-      form.dispatchEvent(new CustomEvent("contactform:success"));
+      await submitContactForm(form);
     });
 
     if (phoneInput instanceof HTMLInputElement) {

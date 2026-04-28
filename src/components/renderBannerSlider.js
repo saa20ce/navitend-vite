@@ -2,9 +2,8 @@ function createDot(index, isActive) {
 	return `
     <button
       type="button"
-      class="cursor-pointer banner-dot rounded-full transition-all duration-200 ${
-				isActive ? 'bg-[#FF7948] h-[14px] w-[14px]' : 'bg-[#8F8F8F] h-[8px] w-[8px]'
-			}"
+      class="cursor-pointer banner-dot rounded-full transition-all duration-200 ${isActive ? 'bg-[#FF7948] h-[14px] w-[14px]' : 'bg-[#8F8F8F] h-[8px] w-[8px]'
+		}"
       data-index="${index}"
       aria-label="Перейти к баннеру ${index + 1}"
     ></button>
@@ -24,7 +23,7 @@ function createMobileSlide(slide) {
         <a
           href="${slide.href || '#'}"
           data-contact-modal-open
-          class="mt-1.5 inline-flex h-[45px] w-[107px] items-center justify-center rounded-[16px] border border-[#FF7948] p-[12px] text-[16px] font-[600] text-[#FF7948]"
+          class="mt-1.5 inline-flex h-[45px] w-[107px] items-center justify-center rounded-[16px] border border-[#FF7948] p-[12px] text-[16px] font-[600] text-[#FF7948] transition-colors duration-200 hover:border-[#FF946D] hover:bg-[#FF946D] hover:text-white"
         >
           Подробнее
         </a>
