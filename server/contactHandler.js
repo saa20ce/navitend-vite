@@ -1,4 +1,5 @@
 import axios from 'axios';
+import nodemailer from 'nodemailer';
 import { SocksProxyAgent } from 'socks-proxy-agent';
 
 function setJsonHeaders(res) {
@@ -35,7 +36,7 @@ async function readJsonBody(req) {
   return rawBody ? JSON.parse(rawBody) : {};
 }
 
-function getTelegramMessage(payload) {
+function getContactMessage(payload) {
   const lines = [
     "Новая заявка с сайта Navident",
     "",
@@ -83,6 +84,61 @@ function getTelegramRequestOptions() {
   return options;
 }
 
+function getEmailConfig() {
+  const host = process.env.SMTP_HOST;
+  const port = Number(process.env.SMTP_PORT);
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+  const to = process.env.EMAIL_TO;
+  const from = process.env.EMAIL_FROM;
+  const secureValue = process.env.SMTP_SECURE;
+
+  return {
+    host,
+    port,
+    secure: secureValue ? secureValue === "true" : port === 465,
+    auth: user && pass ? { user, pass } : undefined,
+    from,
+    to,
+  };
+}
+
+function hasEmailConfig(config) {
+  return Boolean(config.host && config.port && config.from && config.to);
+}
+
+function hasAnyEmailConfig(config) {
+  return Boolean(config.host || config.from || config.to || config.auth);
+}
+
+async function sendEmailNotification(message) {
+  const emailConfig = getEmailConfig();
+
+  if (!hasEmailConfig(emailConfig)) {
+    if (hasAnyEmailConfig(emailConfig)) {
+      throw new Error("Email variables are partially configured.");
+    }
+
+    return { skipped: true };
+  }
+
+  const transporter = nodemailer.createTransport({
+    host: emailConfig.host,
+    port: emailConfig.port,
+    secure: emailConfig.secure,
+    auth: emailConfig.auth,
+  });
+
+  await transporter.sendMail({
+    from: emailConfig.from,
+    to: emailConfig.to,
+    subject: "Новая заявка с сайта Navident",
+    text: message,
+  });
+
+  return { skipped: false };
+}
+
 function getRequestErrorDetails(error) {
   return {
     message: error.message,
@@ -122,9 +178,11 @@ export async function handleContactRequest(req, res) {
       return;
     }
 
+    const contactMessage = getContactMessage(payload);
+
     const telegramResponse = await axios.post(`https://api.telegram.org/bot${botToken}/sendMessage`, {
       chat_id: chatId,
-      text: getTelegramMessage(payload),
+      text: contactMessage,
     }, getTelegramRequestOptions());
 
     const telegramResult = telegramResponse.data;
@@ -132,6 +190,14 @@ export async function handleContactRequest(req, res) {
     if (telegramResponse.status !== 200 || !telegramResult.ok) {
       console.error("Telegram API error:", telegramResult);
       sendJson(res, 502, { error: "Не удалось отправить заявку в Telegram." });
+      return;
+    }
+
+    try {
+      await sendEmailNotification(contactMessage);
+    } catch (error) {
+      console.error("Email notification error:", getRequestErrorDetails(error));
+      sendJson(res, 502, { error: "Не удалось отправить заявку на email." });
       return;
     }
 

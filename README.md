@@ -6,7 +6,7 @@
 
 Приложение включает:
 - Фронтенд на Vite с Tailwind CSS
-- API для отправки контактных данных в Telegram
+- API для отправки контактных данных в Telegram и на email
 - Docker-контейнеризация для развертывания
 
 ## Docker настройка
@@ -28,6 +28,13 @@ cp .env.example .env
 - `VMESS_URL`: прямая ссылка `vmess://...` для Xray
 - `SUBSCRIPTION_URL`: URL подписки Vmess прокси, если Telegram API должен идти через Xray
 - `TELEGRAM_PROXY_URL`: SOCKS-прокси для Telegram, если нужно обойти встроенный Xray
+- `SMTP_HOST`: SMTP-сервер для отправки email, например `smtp.office365.com`
+- `SMTP_PORT`: SMTP-порт, обычно `587`
+- `SMTP_SECURE`: `true` для порта `465`, для `587` обычно `false`
+- `SMTP_USER`: логин SMTP-ящика
+- `SMTP_PASS`: пароль или пароль приложения SMTP-ящика
+- `EMAIL_FROM`: адрес отправителя, если отличается от `SMTP_USER`
+- `EMAIL_TO`: адрес получателя заявок
 
 ### Сборка и запуск
 
