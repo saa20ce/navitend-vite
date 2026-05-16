@@ -1,6 +1,10 @@
 import axios from 'axios';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import nodemailer from 'nodemailer';
 import { SocksProxyAgent } from 'socks-proxy-agent';
+
+const execFileAsync = promisify(execFile);
 
 function setJsonHeaders(res) {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -71,6 +75,7 @@ function validatePayload(payload) {
 
 function getTelegramRequestOptions() {
   const options = {
+    timeout: 30000,
     headers: {
       "Content-Type": "application/json",
     },
@@ -78,10 +83,50 @@ function getTelegramRequestOptions() {
   const proxyUrl = process.env.TELEGRAM_PROXY_URL || process.env.SOCKS_PROXY_URL;
 
   if (proxyUrl) {
-    options.httpsAgent = new SocksProxyAgent(proxyUrl);
+    const proxyAgent = new SocksProxyAgent(proxyUrl);
+    options.httpAgent = proxyAgent;
+    options.httpsAgent = proxyAgent;
+    options.proxy = false;
   }
 
   return options;
+}
+
+function getCurlSocksProxyValue(proxyUrl) {
+  return proxyUrl.replace(/^socks5h?:\/\//, "");
+}
+
+async function sendTelegramNotification(botToken, chatId, text) {
+  const proxyUrl = process.env.TELEGRAM_PROXY_URL || process.env.SOCKS_PROXY_URL;
+
+  if (proxyUrl) {
+    const { stdout } = await execFileAsync("curl", [
+      "-sS",
+      "--max-time",
+      "30",
+      "--socks5",
+      getCurlSocksProxyValue(proxyUrl),
+      "-X",
+      "POST",
+      `https://api.telegram.org/bot${botToken}/sendMessage`,
+      "-d",
+      `chat_id=${chatId}`,
+      "--data-urlencode",
+      `text=${text}`,
+    ], {
+      timeout: 35000,
+      maxBuffer: 1024 * 1024,
+    });
+
+    return JSON.parse(stdout);
+  }
+
+  const telegramResponse = await axios.post(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    chat_id: chatId,
+    text,
+  }, getTelegramRequestOptions());
+
+  return telegramResponse.data;
 }
 
 function getEmailConfig() {
@@ -127,6 +172,10 @@ async function sendEmailNotification(message) {
     port: emailConfig.port,
     secure: emailConfig.secure,
     auth: emailConfig.auth,
+    ignoreTLS: !emailConfig.secure && emailConfig.port === 25,
+    connectionTimeout: 30000,
+    greetingTimeout: 30000,
+    socketTimeout: 30000,
   });
 
   await transporter.sendMail({
@@ -170,6 +219,7 @@ export async function handleContactRequest(req, res) {
   }
 
   try {
+    console.log("Contact API: request started");
     const payload = await readJsonBody(req);
     const validationError = validatePayload(payload);
 
@@ -180,21 +230,21 @@ export async function handleContactRequest(req, res) {
 
     const contactMessage = getContactMessage(payload);
 
-    const telegramResponse = await axios.post(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-      chat_id: chatId,
-      text: contactMessage,
-    }, getTelegramRequestOptions());
+    console.log("Contact API: sending Telegram notification");
+    const telegramResult = await sendTelegramNotification(botToken, chatId, contactMessage);
 
-    const telegramResult = telegramResponse.data;
-
-    if (telegramResponse.status !== 200 || !telegramResult.ok) {
+    if (!telegramResult.ok) {
       console.error("Telegram API error:", telegramResult);
       sendJson(res, 502, { error: "Не удалось отправить заявку в Telegram." });
       return;
     }
 
+    console.log("Contact API: Telegram notification sent");
+
     try {
+      console.log("Contact API: sending email notification");
       await sendEmailNotification(contactMessage);
+      console.log("Contact API: email notification sent");
     } catch (error) {
       console.error("Email notification error:", getRequestErrorDetails(error));
       sendJson(res, 502, { error: "Не удалось отправить заявку на email." });

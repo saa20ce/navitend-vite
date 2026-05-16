@@ -1,6 +1,13 @@
-FROM node:20-alpine
+FROM node:20-bookworm-slim
 
-RUN apk add --no-cache curl jq unzip
+RUN rm -f /etc/apt/sources.list.d/* && \
+    printf '%s\n' \
+      'deb http://mirror.yandex.ru/debian bookworm main' \
+      'deb http://mirror.yandex.ru/debian bookworm-updates main' \
+      > /etc/apt/sources.list && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends ca-certificates curl jq unzip && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN curl -L https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip -o xray.zip && \
     unzip xray.zip && \

@@ -1,5 +1,5 @@
 # Build stage
-FROM node:20-alpine as build
+FROM node:20-bookworm-slim as build
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY . .
 RUN npm run build
 
 # Production stage
-FROM nginx:alpine
+FROM nginx:stable-bookworm
 
 # Copy built files to nginx
 COPY --from=build /app/dist /usr/share/nginx/html
