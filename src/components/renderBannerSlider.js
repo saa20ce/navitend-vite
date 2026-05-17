@@ -13,10 +13,10 @@ function createDot(index, isActive) {
 function createMobileSlide(slide) {
 	return `
     <article
-      class="banner-mobile-slide relative h-full w-full shrink-0 overflow-hidden rounded-[20px] bg-cover bg-center px-[20px] py-[28px]"
+      class="banner-mobile-slide relative mx-2 h-full w-[calc(100%-16px)] shrink-0 overflow-hidden rounded-[20px] bg-cover bg-center px-[20px] py-[28px]"
       style="background-image:url('${slide.mobileBg}')"
     >
-      <div class="relative z-10 flex max-w-[230px] flex-col items-start gap-[14px]">
+      <div class="relative z-10 flex flex-col items-start gap-[14px]">
         <h2 class="text-[24px]/[120%] font-[800] text-[#4F4F4F]">${slide.title}</h2>
         <p class="text-[14px] font-semibold text-[#4F4F4F]">${slide.text1}</p>
         <p class="text-[12px] font-[400] text-[#4F4F4F]">${slide.text2}</p>
@@ -32,7 +32,7 @@ function createMobileSlide(slide) {
       <img
         src="${slide.mobileImage}"
         alt="${slide.imageAlt || ''}"
-        class="absolute bottom-0 right-[-20px] z-10 h-[198px] w-[198px] rounded-e-[20px]"
+        class="absolute bottom-0 right-[0px] z-10 h-[180px] w-[180px] rounded-e-[20px]"
       />
     </article>
   `;
