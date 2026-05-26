@@ -21,8 +21,20 @@
 			</div>
 		</div>
 
-		<div>
-			<img src="./assets/map.png" class="w-auto" />
+		<div class="w-full lg:w-auto">
+			<div data-contact-map
+				data-map-src="https://yandex.ru/map-widget/v1/?mode=search&amp;text=%D0%9D%D0%B0%D0%B2%D0%B8%D0%B4%D0%B5%D0%BD%D1%82%2C%20%D0%9D%D0%BE%D0%B2%D0%BE%D1%81%D0%B8%D0%B1%D0%B8%D1%80%D1%81%D0%BA%2C%20%D1%83%D0%BB.%20%D0%91%D0%B0%D0%BB%D1%82%D0%B8%D0%B9%D1%81%D0%BA%D0%B0%D1%8F%2C%2031&amp;z=16"
+				data-map-title="Карта проезда: Навидент, Новосибирск, ул. Балтийская, 31"
+				class="relative aspect-[752/486] w-full overflow-hidden rounded-[8px] bg-[#F4F4F4] lg:w-[752px]">
+				<img data-contact-map-placeholder src="./assets/map.png" alt="Карта проезда к клинике Навидент"
+					class="absolute inset-0 h-full w-full object-cover transition-opacity duration-500" loading="lazy" />
+				<div data-contact-map-frame class="absolute inset-0 opacity-0 transition-opacity duration-500"></div>
+				<a href="https://yandex.ru/maps/?text=%D0%9D%D0%B0%D0%B2%D0%B8%D0%B4%D0%B5%D0%BD%D1%82%2C%20%D0%9D%D0%BE%D0%B2%D0%BE%D1%81%D0%B8%D0%B1%D0%B8%D1%80%D1%81%D0%BA%2C%20%D1%83%D0%BB.%20%D0%91%D0%B0%D0%BB%D1%82%D0%B8%D0%B9%D1%81%D0%BA%D0%B0%D1%8F%2C%2031"
+					target="_blank" rel="noopener noreferrer" aria-label="Открыть адрес клиники в Яндекс Картах"
+					class="absolute bottom-[12px] right-[12px] z-[2] rounded-[8px] bg-[#FF7A00] px-[16px] py-[10px] text-[14px] font-[700] text-white shadow-[0_8px_20px_rgba(0,0,0,0.16)] transition-colors hover:bg-[#E96F00]">
+					Маршрут
+				</a>
+			</div>
 		</div>
 	</div>
 </section>

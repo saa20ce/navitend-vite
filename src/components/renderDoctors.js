@@ -38,7 +38,7 @@ export function createDoctorsCard({ id, surname, name, description, icon }, opti
 
 function createDoctorsMobileSlide(doctor) {
   return `
-    <article class="doctor-mobile-slide w-full shrink-0 px-2 lg:px-0">
+    <article class="doctor-mobile-slide w-full shrink-0 px-2 md:w-1/2 xl:w-full xl:px-0">
       ${createDoctorsCard(doctor, {
     className: "min-h-full gap-[28px] p-[24px]",
     imageWrapperClassName: "mb-[20px]",

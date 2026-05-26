@@ -1,2 +1,22 @@
 @import "tailwindcss";
 @config "../../tailwind.config.js";
+
+.banner-tablet-slide {
+  box-sizing: border-box;
+  flex: 0 0 100%;
+  height: 100%;
+  padding-inline: 18px;
+  width: 100%;
+}
+
+.banner-tablet-card {
+  background-position: center;
+  background-size: cover;
+  border-radius: 16px;
+  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden;
+  padding: 39px 42px;
+  position: relative;
+  width: 100%;
+}

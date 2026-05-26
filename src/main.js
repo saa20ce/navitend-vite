@@ -41,6 +41,7 @@ import { initRequisitesAccordion } from "./components/initRequisitesAccordion";
 import { initServiceModal } from "./components/initServiceModal";
 import { initDoctorsModal } from "./components/initDoctorsModal";
 import { initReviewLabWidget } from "./components/initReviewLabWidget";
+import { initContactMap } from "./components/initContactMap";
 
 const app = document.querySelector("#app");
 
@@ -83,3 +84,4 @@ initLicensesSlider(licenses);
 initServiceModal(servicePrices);
 initDoctorsModal(doctorsDataCardsModal);
 initReviewLabWidget();
+initContactMap();

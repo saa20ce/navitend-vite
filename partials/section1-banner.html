@@ -1,9 +1,10 @@
-<section class="relative mt-4 flex w-full justify-center rounded-[20px] lg:mx-0 lg:rounded-none">
+<section class="relative mt-4 flex w-full justify-center rounded-[20px] md:mx-0 md:rounded-none">
 	<div id="banner-slider"
-		class="touch-pan-y select-none relative h-[400px] w-full max-w-[1300px] min-w-0 overflow-hidden rounded-[20px] lg:h-[560px] lg:rounded-[16px]">
-		<div data-banner-mobile-track class="flex h-full lg:hidden"></div>
+		class="touch-pan-y select-none relative h-[400px] w-full max-w-[1300px] min-w-0 overflow-hidden rounded-[20px] md:h-[360px] xl:h-[560px] md:rounded-[16px]">
+		<div data-banner-mobile-track class="flex h-full md:hidden"></div>
+		<div data-banner-tablet-track class="hidden h-full md:flex xl:hidden"></div>
 
-		<div class="relative z-10 hidden h-full w-full flex-col items-start bg-cover bg-center px-[72px] py-[72px] lg:flex"
+		<div class="relative z-10 hidden h-full w-full flex-col items-start bg-cover bg-center xl:flex xl:px-[72px] xl:py-[72px]"
 			id="banner-desktop-content">
 			<div class="relative z-10 flex max-w-[650px] flex-col items-start gap-[20px]">
 				<h1 id="banner-title" class="text-[48px]/[120%] font-[800] text-[#4F4F4F]"></h1>
@@ -19,22 +20,22 @@
 			</div>
 
 			<img id="banner-image-desktop" src="" alt=""
-				class="absolute bottom-[-22px] right-[0px] z-10 hidden h-[582px] lg:block" />
+				class="absolute bottom-[-22px] right-[0px] z-10 hidden h-[582px] xl:block" />
 
 			<div class="absolute inset-0 z-0 rounded-[16px] bg-cover bg-center" id="banner-background"></div>
 		</div>
 	</div>
 
-	<div class="absolute bottom-[-32px] left-1/2 z-20 flex -translate-x-1/2 items-center gap-[28px] lg:bottom-[-64px]">
+	<div class="absolute bottom-[-32px] left-1/2 z-20 flex -translate-x-1/2 items-center gap-[28px] md:bottom-[-64px]">
 		<button id="banner-prev" type="button" aria-label="Предыдущий баннер"
-			class="hidden lg:flex h-[40px] w-[40px] items-center justify-center cursor-pointer">
+			class="hidden md:flex h-[40px] w-[40px] items-center justify-center cursor-pointer">
 			<img src="./assets/chevronLeft.svg" alt="" class="w-[13px] h-[22px]" />
 		</button>
 
 		<div id="banner-dots" class="flex items-center gap-[28px]"></div>
 
 		<button id="banner-next" type="button" aria-label="Следующий баннер"
-			class="hidden lg:flex h-[40px] w-[40px] items-center justify-center cursor-pointer">
+			class="hidden md:flex h-[40px] w-[40px] items-center justify-center cursor-pointer">
 			<img src="./assets/chevronRight.svg" alt="" class="h-auto w-auto" />
 		</button>
 	</div>

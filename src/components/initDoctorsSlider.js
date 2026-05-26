@@ -28,9 +28,11 @@ export function initDoctorsSlider(items) {
   let isDragging = false;
   let blockButtonClick = false;
 
-  const isMobileViewport = () => window.innerWidth < 1024;
-  const getMaxIndex = () => items.length - 1;
-  const getSlideWidth = () => viewport.offsetWidth;
+  const isSliderViewport = () => window.innerWidth < 1280;
+  const isTabletViewport = () => window.innerWidth >= 768 && window.innerWidth < 1280;
+  const getVisibleSlidesCount = () => (isTabletViewport() ? 2 : 1);
+  const getMaxIndex = () => Math.max(0, items.length - getVisibleSlidesCount());
+  const getSlideWidth = () => viewport.offsetWidth / getVisibleSlidesCount();
 
   const setTranslate = (offset, withAnimation = false) => {
     track.style.transition = withAnimation ? "transform 0.28s ease" : "none";
@@ -43,7 +45,8 @@ export function initDoctorsSlider(items) {
   };
 
   function renderDots() {
-    dots.innerHTML = items.map((_, index) => createDot(index, index === currentIndex)).join("");
+    const dotsCount = getMaxIndex() + 1;
+    dots.innerHTML = Array.from({ length: dotsCount }, (_, index) => createDot(index, index === currentIndex)).join("");
 
     dots.querySelectorAll(".doctor-dot").forEach((dot) => {
       dot.addEventListener("click", () => {
@@ -56,7 +59,7 @@ export function initDoctorsSlider(items) {
   }
 
   function onPointerDown(event) {
-    if (!isMobileViewport()) {
+    if (!isSliderViewport()) {
       return;
     }
 
@@ -70,7 +73,7 @@ export function initDoctorsSlider(items) {
   }
 
   function onPointerMove(event) {
-    if (!isPointerDown || !isMobileViewport()) {
+    if (!isPointerDown || !isSliderViewport()) {
       return;
     }
 
@@ -101,7 +104,7 @@ export function initDoctorsSlider(items) {
   }
 
   function onPointerEnd() {
-    if (!isMobileViewport()) {
+    if (!isSliderViewport()) {
       return;
     }
 
@@ -151,7 +154,9 @@ export function initDoctorsSlider(items) {
 
   window.addEventListener("resize", () => {
     dragOffset = 0;
+    currentIndex = Math.min(currentIndex, getMaxIndex());
     updatePosition();
+    renderDots();
   });
 
   renderDots();
