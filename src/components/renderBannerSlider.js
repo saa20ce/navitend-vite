@@ -1,5 +1,5 @@
 const TABLET_MAX_WIDTH = 1280;
-const AUTOPLAY_DELAY = 5000;
+const AUTOPLAY_DELAY = 7000;
 
 function createDot(index, isActive) {
 	return `
@@ -79,6 +79,38 @@ function createTabletSlide(slide) {
   `;
 }
 
+function createDesktopSlide(slide, index) {
+	const titleTag = index === 0 ? 'h1' : 'h2';
+
+	return `
+    <div class="banner-desktop-slide">
+      <article
+        class="banner-desktop-card"
+        style="background-image:url('${slide.desktopBg}')"
+      >
+        <div class="relative z-10 flex max-w-[650px] flex-col items-start gap-[20px]">
+          <${titleTag} class="text-[48px]/[120%] font-[800] text-[#4F4F4F]">${slide.title}</${titleTag}>
+          <p class="max-w-[600px] text-[22px] font-semibold text-[#4F4F4F]">${slide.text1}</p>
+          <p class="text-[20px] font-[400] text-[#4F4F4F]">${slide.text2}</p>
+          <a
+            href="${slide.href || '#'}"
+            data-contact-modal-open
+            class="mt-1.5 inline-flex h-[52px] w-[131px] items-center justify-center rounded-[16px] border border-[#FF7948] p-[12px] text-[18px] font-[600] text-[#FF7948] transition-colors duration-200 hover:border-[#FF946D] hover:bg-[#FF946D] hover:text-white"
+          >
+            Подробнее
+          </a>
+        </div>
+
+        <img
+          src="${slide.desktopImage}"
+          alt="${slide.imageAlt || ''}"
+          class="absolute bottom-[-22px] right-[0px] z-10 h-[582px]"
+        />
+      </article>
+    </div>
+  `;
+}
+
 export function initBannerSlider(slides) {
 	if (!slides?.length) {
 		console.error('Missing banner slides');
@@ -88,12 +120,7 @@ export function initBannerSlider(slides) {
 	const sliderEl = document.querySelector('#banner-slider');
 	const mobileTrackEl = document.querySelector('[data-banner-mobile-track]');
 	const tabletTrackEl = document.querySelector('[data-banner-tablet-track]');
-	const titleEl = document.querySelector('#banner-title');
-	const text1El = document.querySelector('#banner-text-1');
-	const text2El = document.querySelector('#banner-text-2');
-	const linkEl = document.querySelector('#banner-link');
-	const desktopImageEl = document.querySelector('#banner-image-desktop');
-	const bgEl = document.querySelector('#banner-background');
+	const desktopTrackEl = document.querySelector('[data-banner-desktop-track]');
 	const dotsEl = document.querySelector('#banner-dots');
 	const prevBtn = document.querySelector('#banner-prev');
 	const nextBtn = document.querySelector('#banner-next');
@@ -102,12 +129,7 @@ export function initBannerSlider(slides) {
 		!sliderEl ||
 		!mobileTrackEl ||
 		!tabletTrackEl ||
-		!titleEl ||
-		!text1El ||
-		!text2El ||
-		!linkEl ||
-		!desktopImageEl ||
-		!bgEl ||
+		!desktopTrackEl ||
 		!dotsEl ||
 		!prevBtn ||
 		!nextBtn
@@ -132,25 +154,27 @@ export function initBannerSlider(slides) {
 	const getMaxIndex = () => slides.length - 1;
 
 	const getSlideWidth = () => sliderEl.offsetWidth;
-	const getActiveSwipeTrack = () => (isTabletViewport() ? tabletTrackEl : mobileTrackEl);
+	const getActiveTrack = () => {
+		if (isMobileViewport()) {
+			return mobileTrackEl;
+		}
+
+		if (isTabletViewport()) {
+			return tabletTrackEl;
+		}
+
+		return desktopTrackEl;
+	};
 
 	const setTrackTranslate = (track, offset, withAnimation = false) => {
 		track.style.transition = withAnimation ? 'transform 0.28s ease' : 'none';
 		track.style.transform = `translate3d(${offset}px, 0, 0)`;
 	};
 
-	const updateSwipePosition = (withAnimation = false) => {
-		const activeTrack = getActiveSwipeTrack();
+	const updateTrackPosition = (withAnimation = false) => {
+		const activeTrack = getActiveTrack();
 		const baseOffset = -currentIndex * getSlideWidth();
 		setTrackTranslate(activeTrack, baseOffset + dragOffset, withAnimation);
-	};
-
-	const getBackgroundImageValue = (slide) => {
-		if (isTabletViewport() && slide.tabletBg) {
-			return `url('${slide.tabletBg}'), url('${slide.desktopBg}')`;
-		}
-
-		return `url('${slide.desktopBg}')`;
 	};
 
 	function renderDots() {
@@ -166,52 +190,35 @@ export function initBannerSlider(slides) {
 		});
 	}
 
-	function renderDesktopSlide() {
-		const slide = slides[currentIndex];
-
-		titleEl.innerHTML = slide.title;
-		text1El.innerHTML = slide.text1;
-		text2El.innerHTML = slide.text2;
-		linkEl.href = slide.href || '#';
-
-		desktopImageEl.src = slide.desktopImage;
-		desktopImageEl.alt = slide.imageAlt || '';
-		bgEl.style.backgroundImage = getBackgroundImageValue(slide);
+	function bindSlideLinkGuards(track) {
+		track.querySelectorAll('[data-contact-modal-open]').forEach((link) => {
+			link.addEventListener('click', (event) => {
+				if (blockLinkClick) {
+					event.preventDefault();
+					event.stopImmediatePropagation();
+				}
+			});
+		});
 	}
 
 	function renderMobileSlides() {
 		mobileTrackEl.innerHTML = slides.map(createMobileSlide).join('');
-
-		mobileTrackEl.querySelectorAll('[data-contact-modal-open]').forEach((link) => {
-			link.addEventListener('click', (event) => {
-				if (blockLinkClick) {
-					event.preventDefault();
-				}
-			});
-		});
+		bindSlideLinkGuards(mobileTrackEl);
 	}
 
 	function renderTabletSlides() {
 		tabletTrackEl.innerHTML = slides.map(createTabletSlide).join('');
+		bindSlideLinkGuards(tabletTrackEl);
+	}
 
-		tabletTrackEl.querySelectorAll('[data-contact-modal-open]').forEach((link) => {
-			link.addEventListener('click', (event) => {
-				if (blockLinkClick) {
-					event.preventDefault();
-				}
-			});
-		});
+	function renderDesktopSlides() {
+		desktopTrackEl.innerHTML = slides.map(createDesktopSlide).join('');
+		bindSlideLinkGuards(desktopTrackEl);
 	}
 
 	function renderSlide() {
 		renderDots();
-
-		if (isSwipeViewport()) {
-			updateSwipePosition(true);
-			return;
-		}
-
-		renderDesktopSlide();
+		updateTrackPosition(true);
 	}
 
 	function stopAutoplay() {
@@ -295,7 +302,7 @@ export function initBannerSlider(slides) {
 		startY = event.clientY;
 		dragOffset = 0;
 
-		getActiveSwipeTrack().style.transition = 'none';
+		getActiveTrack().style.transition = 'none';
 		stopAutoplay();
 	}
 
@@ -333,7 +340,7 @@ export function initBannerSlider(slides) {
 			dragOffset = diffX;
 		}
 
-		updateSwipePosition(false);
+		updateTrackPosition(false);
 	}
 
 	function onPointerEnd() {
@@ -363,7 +370,7 @@ export function initBannerSlider(slides) {
 			goToPrev();
 		} else {
 			dragOffset = 0;
-			updateSwipePosition(true);
+			updateTrackPosition(true);
 			restartAutoplay();
 		}
 
@@ -374,12 +381,6 @@ export function initBannerSlider(slides) {
 
 	prevBtn.addEventListener('click', () => goToPrev());
 	nextBtn.addEventListener('click', () => goToNext());
-
-	linkEl.addEventListener('click', (event) => {
-		if (blockLinkClick) {
-			event.preventDefault();
-		}
-	});
 
 	sliderEl.addEventListener('pointerdown', onPointerDown);
 	sliderEl.addEventListener('pointermove', onPointerMove);
@@ -403,7 +404,7 @@ export function initBannerSlider(slides) {
 
 	renderMobileSlides();
 	renderTabletSlides();
-	renderDesktopSlide();
+	renderDesktopSlides();
 	renderSlide();
 	startAutoplay();
 }

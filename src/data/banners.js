@@ -14,7 +14,7 @@ function createBanner(banner) {
 
 export const banners = [
 	{
-		title: 'Скидка <span class="text-[#FF7948]">20%</span><br>на чистку зубов!',
+		title: 'Скидка <span class="text-[#FF7948]">20%</span><br>на чистку зубов',
 		text1:
 			'Здоровье зубов начинается с чистоты. <br class="hidden md:block" /> Специально для вас — скидка 20 % на профессиональную чистку.',
 		text2: 'Подарите себе заботу о улыбке по выгодной цене!',
@@ -23,16 +23,16 @@ export const banners = [
 		imageAlt: 'Баннер акции на чистку зубов',
 	},
 	{
-		title: 'Скидка <span class="text-[#FF7948]">20%</span><br>на 3D-томографию!!',
+		title: 'Скидка <span class="text-[#FF7948]">20%</span><br>на 3D-томографию',
 		text1:
-			'Точная диагностика — первый шаг к здоровой улыбке. <br class="hidden md:block" />Запишитесь сейчас и и получите доступ к точной диагностике.',
+			'Точная диагностика — первый шаг к здоровой улыбке. <br class="hidden md:block" />Запишитесь сейчас и получите доступ к точной диагностике.',
 		text2: 'Ваша идеальная улыбка стартует с томографии!',
 		mobileImage: './assets/Girl2-Photoroom.png?v=20260517',
 		desktopImage: './assets/Girl2-Photoroom2.png?v=20260517',
 		imageAlt: 'Баннер 3D-томографии',
 	},
 	{
-		title: 'Скидка <span class="text-[#FF7948]">20%</span><br>на ортодонтию!',
+		title: 'Скидка <span class="text-[#FF7948]">20%</span><br>на ортодонтию',
 		text1:
 			'Мечтаете о ровной улыбке? Сейчас — самое время! <br class="hidden md:block" />Получите скидку 20 % на все ортодонтические услуги.',
 		text2: 'Начните путь к идеальным зубам уже сегодня!',
