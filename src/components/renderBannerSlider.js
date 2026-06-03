@@ -1,5 +1,5 @@
 const TABLET_MAX_WIDTH = 1280;
-const AUTOPLAY_DELAY = 7000;
+const AUTOPLAY_DELAY = 9000;
 
 function createDot(index, isActive) {
 	return `
