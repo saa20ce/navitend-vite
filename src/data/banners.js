@@ -23,6 +23,15 @@ export const banners = [
 		imageAlt: 'Баннер 3D-томографии',
 	},
 	{
+		title: 'Скидка <span class="text-[#FF7948]">20%</span><br>на ортодонтию',
+		text1:
+			'Мечтаете о ровной улыбке? Сейчас — самое время! <br class="hidden md:block" />Получите скидку 20 % на все ортодонтические услуги.',
+		text2: 'Начните путь к идеальным зубам уже сегодня!',
+		mobileImage: './assets/Girl3-Photoroom.png?v=20260517',
+		desktopImage: './assets/Girl3-Photoroom2.png?v=20260517',
+		imageAlt: 'Баннер ортодонтии',
+	},
+	{
 		title: 'Ищем сотрудников:',
 		text1:
 			'Ищем в команду: <br/>‒ Ассистента стоматолога  <br/>‒ Врача стоматолога‑терапевта',

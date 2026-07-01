@@ -31,14 +31,14 @@ export const doctorsData = [
 		id: "doctor5",
 		surname: "ПЕНДЕРЕВА",
 		name: "Жанна Викторовна",
-		description: "Врач - стоматолог терапевт",
+		description: "Врач - стоматолог терапевт <br> Заместитель главного врача",
 		icon: "./assets/doctor5.png",
 	},
 	{
 		id: "doctor6",
 		surname: "ПЕНДЕРЕВ",
 		name: "Александр Викторович",
-		description: "Врач - стоматолог хирург <br> Врач - стоматолог ортопед",
+		description: "Врач - стоматолог хирург <br> Врач - стоматолог ортопед <br> Главный врач <br> Директор",
 		icon: "./assets/doctor6.png",
 	},
 ];
