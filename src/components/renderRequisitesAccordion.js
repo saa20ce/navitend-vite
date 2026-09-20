@@ -13,7 +13,7 @@ function createAccordionItem({ id, title, content, isOpen }) {
       >
         <span 
           data-requisite-title 
-          class="${isOpen ? "text-[#FF7948]" : "text-[#4f4f4f]"} text-[16px] font-[800] leading-[1.15] lg:text-[18px]"
+          class="${isOpen ? "text-[#FF7948]" : "text-[#4f4f4f]"} text-[16px] font-[600] leading-[1.15] lg:text-[20px]"
         >
           ${title}
         </span>

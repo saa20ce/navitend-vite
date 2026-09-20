@@ -20,16 +20,6 @@
     "photo": "./assets/doctor2Full.svg"
   },
   {
-    "id": "doctor3",
-    "title": "ШЕЙКНЕХТ Дмитрий Игоревич",
-    "accreditation": [
-      { "name": "Рентгенолаборант", "date": "2030г" }
-    ],
-    "education": "Институт переподготовки и повышения квалификации специалистов здравоохранения",
-    "experience": "6 лет",
-    "photo": "./assets/doctor3Full.png"
-  },
-  {
     "id": "doctor4",
     "title": "ЛАСКИНА Татьяна Юрьевна",
     "accreditation": [

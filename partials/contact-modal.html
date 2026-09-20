@@ -3,14 +3,16 @@
 	<div class="absolute inset-0" data-contact-modal-close></div>
 
 	<div data-contact-modal-panel
+		role="dialog" aria-modal="true" aria-labelledby="contact-modal-title" tabindex="-1"
 		class="absolute inset-x-[16px] top-[20px] mx-auto w-auto max-w-[623px] -translate-y-4 rounded-[28px] bg-white px-[24px] pt-[76px] pb-[28px] opacity-0 shadow-[0_36px_120px_rgba(74,74,74,0.16)] transition duration-300 lg:left-1/2 lg:right-auto lg:top-1/2 lg:w-[660px] lg:-translate-x-1/2 lg:-translate-y-[calc(50%+16px)] lg:rounded-[36px] lg:px-[46px] lg:py-[60px]">
+		<div data-contact-modal-entry>
 		<div class="flex items-start justify-between gap-[16px]">
 			<div class="pr-[10px]">
-				<h3 class="text-[22px] lg:text-[32px] font-[800] leading-[1.08] text-[#4F4F4F]">
+				<h3 id="contact-modal-title" class="contact-modal-title">
 					Запишитесь на прием
 				</h3>
 				<p
-					class="mt-[18px] w-full text-[16px] font-[500] leading-[1.22] text-[#5B5B5B] lg:mt-[16px] lg:text-[20px]">
+					class="contact-modal-description mt-[18px] w-full lg:mt-[16px]">
 					Оставьте ваш номер телефона —<br /> администратор свяжется с вами в течение рабочего дня
 				</p>
 			</div>
@@ -31,7 +33,7 @@
 			</div>
 
 			<button type="submit"
-				class="mt-[32px] lg:mt-[24px] inline-flex h-[44px] w-full items-center justify-center rounded-[16px] lg:rounded-[20px] bg-[#FF7848] px-[18px] text-[16px] lg:text-[18px] font-[600] text-white transition-colors duration-200 hover:bg-[#FF946D] lg:mt-[26px] lg:h-[52px] lg:text-[18px] lg:py-0 lg:pt-[5px]">
+				class="contact-modal-button mt-[32px] lg:mt-[26px]">
 				Заказать звонок
 			</button>
 
@@ -41,5 +43,12 @@
 				<a href="#" class="underline underline-offset-[3px]">политикой конфиденциальности</a>
 			</p>
 		</form>
+		</div>
+		<div data-contact-modal-success hidden class="text-center">
+			<img src="./assets/contact-success.svg" alt="" class="mx-auto h-[44px] w-[44px] lg:h-[54px] lg:w-[54px]" />
+			<h3 id="contact-success-title" class="contact-modal-title mt-[20px]">Ваша заявка принята!</h3>
+			<p class="contact-modal-description mt-[16px] lg:mt-[20px]">Ожидайте звонка —<br />мы обязательно с вами свяжемся.</p>
+			<button type="button" data-contact-modal-close class="contact-modal-button mt-[24px] lg:mt-[36px]">Хорошо</button>
+		</div>
 	</div>
 </div>

@@ -23,18 +23,21 @@ function createMobileSlide(slide) {
         <h2 class="text-[24px]/[120%] font-[800] text-[#4F4F4F]">${slide.title}</h2>
         <p class="text-[14px] font-semibold text-[#4F4F4F]">${slide.text1}</p>
         <p class="text-[12px] font-[400] text-[#4F4F4F]">${slide.text2}</p>
-        <a
+        ${slide.showButton === false ? '' : `<a
           href="${slide.href || '#'}"
           data-contact-modal-open
-          class="mt-1.5 inline-flex h-[45px] w-[107px] items-center justify-center rounded-[16px] border border-[#FF7948] p-[12px] text-[16px] font-[600] text-[#FF7948] transition-colors duration-200 hover:border-[#FF946D] hover:bg-[#FF946D] hover:text-white"
+          class="mt-1.5 inline-flex h-[45px] min-w-[107px] items-center justify-center rounded-[16px] border border-[#FF7948] p-[12px] text-[16px] font-[600] text-[#FF7948] transition-colors duration-200 hover:border-[#FF946D] hover:bg-[#FF946D] hover:text-white"
         >
-          Подробнее
-        </a>
+          Записаться
+        </a>`}
       </div>
 
       <img
-        src="${slide.mobileImage}"
+        data-banner-image
+        data-src="${slide.mobileImage}"
         alt="${slide.imageAlt || ''}"
+        loading="lazy"
+        decoding="async"
         class="absolute bottom-0 right-[0px] z-10 h-[180px] w-[180px] rounded-e-[20px]"
       />
     </article>
@@ -60,18 +63,21 @@ function createTabletSlide(slide) {
           <h2 class="text-[32px]/[120%] font-[800] text-[#4F4F4F]">${slide.title}</h2>
           <p class="max-w-[600px] text-[16px] font-semibold text-[#4F4F4F]">${slide.text1}</p>
           <p class="text-[14px] font-[400] text-[#4F4F4F]">${slide.text2}</p>
-          <a
+          ${slide.showButton === false ? '' : `<a
             href="${slide.href || '#'}"
             data-contact-modal-open
             class="mt-1.5 inline-flex h-[52px] w-[131px] items-center justify-center rounded-[16px] border border-[#FF7948] p-[12px] text-[18px] font-[600] text-[#FF7948] transition-colors duration-200 hover:border-[#FF946D] hover:bg-[#FF946D] hover:text-white"
           >
-            Подробнее
-          </a>
+            Записаться
+          </a>`}
         </div>
 
         <img
-          src="${slide.desktopImage}"
+          data-banner-image
+          data-src="${slide.desktopImage}"
           alt="${slide.imageAlt || ''}"
+          loading="lazy"
+          decoding="async"
           class="absolute bottom-[-22px] right-[-10px] z-10 h-[363px] "
         />
       </article>
@@ -79,8 +85,8 @@ function createTabletSlide(slide) {
   `;
 }
 
-function createDesktopSlide(slide, index) {
-	const titleTag = index === 0 ? 'h1' : 'h2';
+function createDesktopSlide(slide, index, isPrimarySlide = false) {
+	const titleTag = isPrimarySlide ? 'h1' : 'h2';
 
 	return `
     <div class="banner-desktop-slide">
@@ -92,18 +98,21 @@ function createDesktopSlide(slide, index) {
           <${titleTag} class="text-[48px]/[120%] font-[800] text-[#4F4F4F]">${slide.title}</${titleTag}>
           <p class="max-w-[600px] text-[22px] font-semibold text-[#4F4F4F]">${slide.text1}</p>
           <p class="text-[20px] font-[400] text-[#4F4F4F]">${slide.text2}</p>
-          <a
+          ${slide.showButton === false ? '' : `<a
             href="${slide.href || '#'}"
             data-contact-modal-open
             class="mt-1.5 inline-flex h-[52px] w-[131px] items-center justify-center rounded-[16px] border border-[#FF7948] p-[12px] text-[18px] font-[600] text-[#FF7948] transition-colors duration-200 hover:border-[#FF946D] hover:bg-[#FF946D] hover:text-white"
           >
-            Подробнее
-          </a>
+            Записаться
+          </a>`}
         </div>
 
         <img
-          src="${slide.desktopImage}"
+          data-banner-image
+          data-src="${slide.desktopImage}"
           alt="${slide.imageAlt || ''}"
+          loading="lazy"
+          decoding="async"
           class="absolute bottom-[-22px] right-[0px] z-10 h-[582px]"
         />
       </article>
@@ -139,20 +148,20 @@ export function initBannerSlider(slides) {
 	}
 
 	let currentIndex = 0;
+	let trackIndex = 1;
 	let startX = 0;
 	let startY = 0;
 	let dragOffset = 0;
 	let isPointerDown = false;
 	let isDragging = false;
+	let activePointerId = null;
+	let isLoopTransition = false;
 	let blockLinkClick = false;
 	let autoplayTimer = null;
 	let isAutoplayPaused = false;
 
 	const isMobileViewport = () => window.innerWidth < 768;
 	const isTabletViewport = () => window.innerWidth >= 768 && window.innerWidth < TABLET_MAX_WIDTH;
-	const isSwipeViewport = () => isMobileViewport() || isTabletViewport();
-	const getMaxIndex = () => slides.length - 1;
-
 	const getSlideWidth = () => sliderEl.offsetWidth;
 	const getActiveTrack = () => {
 		if (isMobileViewport()) {
@@ -173,16 +182,23 @@ export function initBannerSlider(slides) {
 
 	const updateTrackPosition = (withAnimation = false) => {
 		const activeTrack = getActiveTrack();
-		const baseOffset = -currentIndex * getSlideWidth();
+		const baseOffset = -trackIndex * getSlideWidth();
 		setTrackTranslate(activeTrack, baseOffset + dragOffset, withAnimation);
 	};
+
+	const getLoopedSlides = () => [slides[slides.length - 1], ...slides, slides[0]];
 
 	function renderDots() {
 		dotsEl.innerHTML = slides.map((_, index) => createDot(index, index === currentIndex)).join('');
 
 		dotsEl.querySelectorAll('.banner-dot').forEach((dot) => {
 			dot.addEventListener('click', () => {
+				if (isLoopTransition) {
+					return;
+				}
+
 				currentIndex = Number(dot.dataset.index);
+				trackIndex = currentIndex + 1;
 				dragOffset = 0;
 				renderSlide();
 				restartAutoplay();
@@ -201,24 +217,42 @@ export function initBannerSlider(slides) {
 		});
 	}
 
+	function loadCurrentBannerImages() {
+		const images = getActiveTrack().querySelectorAll('[data-banner-image]');
+
+		[trackIndex, trackIndex + 1].forEach((index) => {
+			const image = images[index];
+
+			if (image && !image.getAttribute('src')) {
+				image.src = image.dataset.src;
+			}
+		});
+	}
+
 	function renderMobileSlides() {
-		mobileTrackEl.innerHTML = slides.map(createMobileSlide).join('');
+		mobileTrackEl.innerHTML = getLoopedSlides().map(createMobileSlide).join('');
 		bindSlideLinkGuards(mobileTrackEl);
 	}
 
 	function renderTabletSlides() {
-		tabletTrackEl.innerHTML = slides.map(createTabletSlide).join('');
+		tabletTrackEl.innerHTML = getLoopedSlides().map(createTabletSlide).join('');
 		bindSlideLinkGuards(tabletTrackEl);
 	}
 
 	function renderDesktopSlides() {
-		desktopTrackEl.innerHTML = slides.map(createDesktopSlide).join('');
+		const loopedSlides = getLoopedSlides();
+		desktopTrackEl.innerHTML = loopedSlides
+			.map((slide, index) =>
+				createDesktopSlide(slide, (index - 1 + slides.length) % slides.length, index === 1),
+			)
+			.join('');
 		bindSlideLinkGuards(desktopTrackEl);
 	}
 
 	function renderSlide() {
 		renderDots();
 		updateTrackPosition(true);
+		loadCurrentBannerImages();
 	}
 
 	function stopAutoplay() {
@@ -271,7 +305,13 @@ export function initBannerSlider(slides) {
 	}
 
 	function goToPrev({ shouldRestartAutoplay = true } = {}) {
+		if (isLoopTransition) {
+			return;
+		}
+
 		currentIndex = currentIndex === 0 ? slides.length - 1 : currentIndex - 1;
+		trackIndex -= 1;
+		isLoopTransition = trackIndex === 0;
 		dragOffset = 0;
 		renderSlide();
 
@@ -281,7 +321,13 @@ export function initBannerSlider(slides) {
 	}
 
 	function goToNext({ shouldRestartAutoplay = true } = {}) {
+		if (isLoopTransition) {
+			return;
+		}
+
 		currentIndex = currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
+		trackIndex += 1;
+		isLoopTransition = trackIndex === slides.length + 1;
 		dragOffset = 0;
 		renderSlide();
 
@@ -291,11 +337,18 @@ export function initBannerSlider(slides) {
 	}
 
 	function onPointerDown(event) {
-		if (!isSwipeViewport()) {
+		if (
+			isPointerDown ||
+			isLoopTransition ||
+			!event.isPrimary ||
+			event.button !== 0 ||
+			slides.length <= 1
+		) {
 			return;
 		}
 
 		isPointerDown = true;
+		activePointerId = event.pointerId;
 		isDragging = false;
 		blockLinkClick = false;
 		startX = event.clientX;
@@ -307,7 +360,7 @@ export function initBannerSlider(slides) {
 	}
 
 	function onPointerMove(event) {
-		if (!isPointerDown || !isSwipeViewport()) {
+		if (!isPointerDown || event.pointerId !== activePointerId) {
 			return;
 		}
 
@@ -321,30 +374,24 @@ export function initBannerSlider(slides) {
 
 			if (Math.abs(diffY) > Math.abs(diffX)) {
 				isPointerDown = false;
+				activePointerId = null;
 				restartAutoplay();
 				return;
 			}
 
 			isDragging = true;
+			sliderEl.style.cursor = 'grabbing';
 			blockLinkClick = true;
 		}
 
-		const isAtFirstSlide = currentIndex === 0;
-		const isAtLastSlide = currentIndex === getMaxIndex();
-		const isPullingPastFirst = isAtFirstSlide && diffX > 0;
-		const isPullingPastLast = isAtLastSlide && diffX < 0;
 
-		if (isPullingPastFirst || isPullingPastLast) {
-			dragOffset = diffX * 0.35;
-		} else {
-			dragOffset = diffX;
-		}
+		dragOffset = diffX;
 
 		updateTrackPosition(false);
 	}
 
-	function onPointerEnd() {
-		if (!isSwipeViewport()) {
+	function onPointerEnd(event) {
+		if (event && event.pointerId !== activePointerId) {
 			return;
 		}
 
@@ -352,10 +399,13 @@ export function initBannerSlider(slides) {
 			return;
 		}
 
-		const threshold = getSlideWidth() * 0.18;
+		const threshold = Math.min(getSlideWidth() * 0.18, 100);
 		const diff = dragOffset;
+		const cancelled = !event || event.type === 'pointercancel';
 
 		isPointerDown = false;
+		activePointerId = null;
+		sliderEl.style.cursor = '';
 
 		if (!isDragging) {
 			restartAutoplay();
@@ -364,9 +414,9 @@ export function initBannerSlider(slides) {
 
 		isDragging = false;
 
-		if (diff <= -threshold) {
+		if (!cancelled && diff <= -threshold) {
 			goToNext();
-		} else if (diff >= threshold) {
+		} else if (!cancelled && diff >= threshold) {
 			goToPrev();
 		} else {
 			dragOffset = 0;
@@ -382,11 +432,32 @@ export function initBannerSlider(slides) {
 	prevBtn.addEventListener('click', () => goToPrev());
 	nextBtn.addEventListener('click', () => goToNext());
 
+	function resetLoopPosition(event) {
+		if (event.target !== getActiveTrack() || event.propertyName !== 'transform') {
+			return;
+		}
+
+		if (trackIndex === 0) {
+			trackIndex = slides.length;
+			updateTrackPosition(false);
+		} else if (trackIndex === slides.length + 1) {
+			trackIndex = 1;
+			updateTrackPosition(false);
+		}
+
+		loadCurrentBannerImages();
+		isLoopTransition = false;
+	}
+
 	sliderEl.addEventListener('pointerdown', onPointerDown);
-	sliderEl.addEventListener('pointermove', onPointerMove);
-	sliderEl.addEventListener('pointerup', onPointerEnd);
-	sliderEl.addEventListener('pointercancel', onPointerEnd);
-	sliderEl.addEventListener('pointerleave', onPointerEnd);
+	[mobileTrackEl, tabletTrackEl, desktopTrackEl].forEach((track) => {
+		track.addEventListener('transitionend', resetLoopPosition);
+	});
+	window.addEventListener('pointermove', onPointerMove);
+	window.addEventListener('pointerup', onPointerEnd);
+	window.addEventListener('pointercancel', onPointerEnd);
+	window.addEventListener('blur', () => onPointerEnd());
+	sliderEl.addEventListener('dragstart', (event) => event.preventDefault());
 	sliderEl.addEventListener('mouseenter', pauseAutoplay);
 	sliderEl.addEventListener('mouseleave', resumeAutoplay);
 	sliderEl.addEventListener('focusin', pauseAutoplay);
@@ -394,10 +465,14 @@ export function initBannerSlider(slides) {
 	document.addEventListener('visibilitychange', setAutoplayVisibilityState);
 
 	window.addEventListener('resize', () => {
+		activePointerId = null;
+		sliderEl.style.cursor = '';
 		isPointerDown = false;
 		isDragging = false;
 		blockLinkClick = false;
 		dragOffset = 0;
+		trackIndex = currentIndex + 1;
+		isLoopTransition = false;
 		renderSlide();
 		restartAutoplay();
 	});

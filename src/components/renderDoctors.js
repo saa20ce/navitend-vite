@@ -8,11 +8,11 @@ export function createDoctorsCard({ id, surname, name, description, icon }, opti
 
   return `
     <div
-      class="flex w-full flex-col flex-nowrap justify-between gap-8 rounded-[20px] bg-[#F4F4F4] bg-[url('./assets/ellipse.svg')] p-7 text-left transition-colors duration-200 hover:bg-[#EDEDED] lg:p-[32px] lg:pb-[36px] ${className}"
+      class="flex w-full flex-col flex-nowrap justify-between gap-8 rounded-[20px] bg-[#F4F4F4] bg-[url('./assets/ellipse.svg')] bg-contain bg-no-repeat bg-top-left p-7 text-left transition-colors duration-200 hover:bg-[#EDEDED] lg:p-[32px] lg:pb-[36px] ${className}"
     >
       <div class="flex flex-col flex-nowrap items-left">
         <div class="flex h-[110px] w-[110px] shrink-0 items-left justify-center lg:mb-[24px] lg:h-[140px] lg:w-[140px] ${imageWrapperClassName}">
-          <img src="${icon}" alt="" class="w-auto" />
+          <img src="${icon}" alt="" loading="lazy" decoding="async" class="w-auto" />
         </div>
 
         <div class="text-left text-base font-[600] leading-[150%] text-[#4F4F4F] lg:mb-[16px] lg:text-xl ${titleClassName}">
@@ -38,7 +38,7 @@ export function createDoctorsCard({ id, surname, name, description, icon }, opti
 
 function createDoctorsMobileSlide(doctor) {
   return `
-    <article class="doctor-mobile-slide w-full shrink-0 px-2 md:w-1/2 xl:w-full xl:px-0">
+    <article class="doctor-mobile-slide w-[calc(100%_-_36px)] shrink-0 px-[14px] md:w-[calc(50%_-_18px)] xl:w-full xl:px-0">
       ${createDoctorsCard(doctor, {
     className: "min-h-full gap-[28px] p-[24px]",
     imageWrapperClassName: "mb-[20px]",

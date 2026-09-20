@@ -32,7 +32,7 @@ export function initDoctorsSlider(items) {
   const isTabletViewport = () => window.innerWidth >= 768 && window.innerWidth < 1280;
   const getVisibleSlidesCount = () => (isTabletViewport() ? 2 : 1);
   const getMaxIndex = () => Math.max(0, items.length - getVisibleSlidesCount());
-  const getSlideWidth = () => viewport.offsetWidth / getVisibleSlidesCount();
+  const getSlideWidth = () => track.querySelector(".doctor-mobile-slide")?.offsetWidth || viewport.offsetWidth;
 
   const setTranslate = (offset, withAnimation = false) => {
     track.style.transition = withAnimation ? "transform 0.28s ease" : "none";

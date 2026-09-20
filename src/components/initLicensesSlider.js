@@ -32,6 +32,7 @@ export function initLicensesSlider(items) {
   let isPointerDown = false;
   let isDragging = false;
   let blockSlideClick = false;
+  let shouldLoadImages = false;
 
   const getVisibleCount = () => (window.innerWidth >= 1024 ? 4 : 1);
   const getGap = () => (window.innerWidth >= 1024 ? 18 : 14);
@@ -50,7 +51,7 @@ export function initLicensesSlider(items) {
             data-licenses-slide-link
           >
             <div class="flex h-[100%] items-center justify-center overflow-hidden bg-white">
-              <img src="${src}" alt="${alt}" class="h-full w-full object-contain" />
+              <img data-licenses-image data-src="${src}" alt="${alt}" loading="lazy" decoding="async" class="h-full w-full object-contain" />
             </div>
           </a>
         `,
@@ -72,6 +73,22 @@ export function initLicensesSlider(items) {
 
     track.querySelectorAll(".licenses-slide").forEach((slide) => {
       slide.style.width = `${slideWidth}px`;
+    });
+  };
+
+  const loadImagesNearCurrentSlide = () => {
+    if (!shouldLoadImages) {
+      return;
+    }
+
+    const lastImageIndex = Math.min(items.length - 1, currentIndex + getVisibleCount());
+
+    track.querySelectorAll("[data-licenses-image]").forEach((image, index) => {
+      if (index < currentIndex || index > lastImageIndex || image.getAttribute("src")) {
+        return;
+      }
+
+      image.src = image.dataset.src;
     });
   };
 
@@ -109,6 +126,7 @@ export function initLicensesSlider(items) {
     const offset = currentIndex * (slide.clientWidth + getGap()) - dragOffset;
     track.style.transform = `translateX(-${offset}px)`;
 
+    loadImagesNearCurrentSlide();
     renderDots();
     updateButtons();
   };
@@ -221,4 +239,25 @@ export function initLicensesSlider(items) {
   renderSlides();
   updateSlideSizes();
   updatePosition();
+
+  if (!("IntersectionObserver" in window)) {
+    shouldLoadImages = true;
+    loadImagesNearCurrentSlide();
+    return;
+  }
+
+  const imageObserver = new IntersectionObserver(
+    (entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) {
+        return;
+      }
+
+      shouldLoadImages = true;
+      loadImagesNearCurrentSlide();
+      imageObserver.disconnect();
+    },
+    { rootMargin: "400px 0px", threshold: 0.01 },
+  );
+
+  imageObserver.observe(viewport);
 }

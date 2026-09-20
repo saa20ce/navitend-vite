@@ -152,19 +152,11 @@ function hasEmailConfig(config) {
   return Boolean(config.host && config.port && config.from && config.to);
 }
 
-function hasAnyEmailConfig(config) {
-  return Boolean(config.host || config.from || config.to || config.auth);
-}
-
 async function sendEmailNotification(message) {
   const emailConfig = getEmailConfig();
 
   if (!hasEmailConfig(emailConfig)) {
-    if (hasAnyEmailConfig(emailConfig)) {
-      throw new Error("Email variables are partially configured.");
-    }
-
-    return { skipped: true };
+    throw new Error("Email variables are missing or partially configured.");
   }
 
   const transporter = nodemailer.createTransport({
@@ -213,11 +205,6 @@ export async function handleContactRequest(req, res) {
   const botToken = process.env.TELEGRAM_BOT_TOKEN || process.env.BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID || process.env.CHAT_ID;
 
-  if (!botToken || !chatId) {
-    sendJson(res, 500, { error: "Не настроены переменные окружения Telegram." });
-    return;
-  }
-
   try {
     console.log("Contact API: request started");
     const payload = await readJsonBody(req);
@@ -230,17 +217,6 @@ export async function handleContactRequest(req, res) {
 
     const contactMessage = getContactMessage(payload);
 
-    console.log("Contact API: sending Telegram notification");
-    const telegramResult = await sendTelegramNotification(botToken, chatId, contactMessage);
-
-    if (!telegramResult.ok) {
-      console.error("Telegram API error:", telegramResult);
-      sendJson(res, 502, { error: "Не удалось отправить заявку в Telegram." });
-      return;
-    }
-
-    console.log("Contact API: Telegram notification sent");
-
     try {
       console.log("Contact API: sending email notification");
       await sendEmailNotification(contactMessage);
@@ -252,6 +228,25 @@ export async function handleContactRequest(req, res) {
     }
 
     sendJson(res, 200, { ok: true });
+
+    // Best-effort copy: Telegram must not delay the response or block email.
+    if (botToken && chatId) {
+      void sendTelegramNotification(botToken, chatId, contactMessage)
+        .then((result) => {
+          if (!result.ok) {
+            console.error("Telegram notification failed:", { code: result.error_code });
+            return;
+          }
+          console.log("Contact API: Telegram notification sent");
+        })
+        .catch((error) => {
+          // curl errors include the command, bot token and contact details.
+          console.error("Telegram notification failed:", {
+            code: error.code,
+            status: error.response?.status,
+          });
+        });
+    }
   } catch (error) {
     console.error("Contact API error:", getRequestErrorDetails(error));
     sendJson(res, 500, { error: "Внутренняя ошибка сервера." });

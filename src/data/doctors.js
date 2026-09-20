@@ -14,13 +14,6 @@ export const doctorsData = [
 		icon: "./assets/doctor2.png",
 	},
 	{
-		id: "doctor3",
-		surname: "ШЕЙКНЕХТ",
-		name: "Дмитрий Игоревич",
-		description: "Рентгенолаборант",
-		icon: "./assets/doctor3.png",
-	},
-	{
 		id: "doctor4",
 		surname: "ЛАСКИНА",
 		name: "Татьяна Юрьевна",

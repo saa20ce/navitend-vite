@@ -150,7 +150,7 @@ async function submitContactForm(form) {
 
     setStatus(form, "Заявка отправлена. Мы скоро свяжемся с вами.", "success");
     form.reset();
-    form.dispatchEvent(new CustomEvent("contactform:success"));
+    form.dispatchEvent(new CustomEvent("contactform:success", { bubbles: true }));
   } catch (error) {
     setStatus(
       form,

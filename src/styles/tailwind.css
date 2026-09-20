@@ -1,6 +1,37 @@
 @import "tailwindcss";
 @config "../../tailwind.config.js";
 
+.contact-modal-title {
+  @apply text-[22px] lg:text-[32px] font-[800] leading-[1.08] text-[#4F4F4F];
+}
+
+.contact-modal-description {
+  @apply text-[16px] lg:text-[20px] font-[500] leading-[1.22] text-[#5B5B5B];
+}
+
+.contact-modal-button {
+  @apply inline-flex h-[44px] lg:h-[52px] w-full items-center justify-center rounded-[16px] lg:rounded-[20px] bg-[#FF7848] px-[18px] text-[16px] lg:text-[18px] font-[600] text-white transition-colors duration-200 hover:bg-[#FF946D] lg:py-0 lg:pt-[5px];
+}
+
+/* Keep CTA hover states available when a mouse is connected to a hybrid device. */
+[data-contact-modal-open]:hover,
+[data-doctor-trigger]:hover,
+[data-contact-form] button[type="submit"]:hover,
+[data-doctor-modal-scroll-trigger]:hover,
+.contact-modal-button:hover {
+  background-color: #FF946D;
+  border-color: #FF946D;
+  color: #fff;
+}
+
+[data-contact-modal-open]:hover img[src$="arrowOrangeRight.svg"] {
+  filter: brightness(0) invert(1);
+}
+
+[data-contact-modal-panel][data-state="success"] {
+  @apply inset-x-[18px] top-1/2 w-auto max-w-[484px] translate-x-0 -translate-y-1/2 rounded-[20px] px-[24px] py-[28px] md:px-[32px] md:py-[36px] lg:max-w-[510px] lg:rounded-[32px] lg:px-[46px] lg:py-[60px];
+}
+
 .banner-tablet-slide {
   box-sizing: border-box;
   flex: 0 0 100%;
