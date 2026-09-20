@@ -16,17 +16,17 @@ export const licenses = [
   },
   {
     id: "license-4",
-    src: "./assets/docs/4lic.jpg",
+    src: "./assets/docs/4lic.png",
     alt: "Свидетельство, документ 4",
   },
   {
     id: "license-5",
-    src: "./assets/docs/5lic.jpg",
+    src: "./assets/docs/5lic.png",
     alt: "Свидетельство, документ 5",
   },
   {
     id: "license-6",
-    src: "./assets/docs/6lic.jpg",
+    src: "./assets/docs/6lic.png",
     alt: "Свидетельство, документ 6",
   },
 ];
