@@ -1,5 +1,9 @@
 import "./styles/tailwind.css";
 import "./styles/fonts.css";
+import "./styles/footer.css";
+import "./styles/cookie-banner.css";
+import "./styles/contact-consent.css";
+import { initCookieBanner } from "./components/initCookieBanner";
 
 // Data
 import servicePrices from "./data/servicePrices.json";
@@ -27,6 +31,7 @@ import { initDoctorsModal } from "./components/initDoctorsModal";
 import { initReviewLabWidget } from "./components/initReviewLabWidget";
 import { initContactMap } from "./components/initContactMap";
 
+initCookieBanner();
 renderHeaderMenus(menuItems);
 
 const docrotsGrid = document.querySelector("#doctors-grid");

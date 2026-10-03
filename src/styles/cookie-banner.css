@@ -1,0 +1,96 @@
+.cookie-banner {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 55;
+  max-height: 100dvh;
+  overflow-y: auto;
+  border-top: 1px solid #d4d4d4;
+  background: #f4f4f4;
+  color: #4f4f4f;
+}
+
+.cookie-banner[hidden] { display: none; }
+
+.cookie-banner__container {
+  display: grid;
+  gap: 32px;
+  max-width: 1364px;
+  margin-inline: auto;
+  padding: 28px 18px;
+  padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+}
+
+.cookie-banner__message {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+
+.cookie-banner__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.cookie-banner__text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.cookie-banner__text a {
+  text-decoration: underline;
+  text-decoration-color: #aaa;
+  text-underline-offset: 4px;
+}
+
+.cookie-banner__text a:hover { color: #ff7948; }
+
+.cookie-banner__accept {
+  min-height: 44px;
+  padding: 10px 17px;
+  border: 1px solid #ff7948;
+  border-radius: 16px;
+  color: #ff7948;
+  background: transparent;
+  font-size: 16px;
+  line-height: 22px;
+  cursor: pointer;
+  transition: color 200ms, background-color 200ms;
+}
+
+.cookie-banner__accept:hover {
+  color: #fff;
+  background: #ff946d;
+  border-color: #ff946d;
+}
+
+.cookie-banner a:focus-visible,
+.cookie-banner button:focus-visible {
+  outline: 2px solid #ff7948;
+  outline-offset: 4px;
+}
+
+@media (min-width: 1024px) {
+  .cookie-banner__container {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 64px;
+    padding: 20px 32px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  }
+  .cookie-banner__message { align-items: center; gap: 16px; }
+  .cookie-banner__text { font-size: 16px; line-height: 22px; }
+  .cookie-banner__accept {
+    min-height: 53px;
+    border-radius: 20px;
+    font-size: 18px;
+    line-height: 25px;
+    white-space: nowrap;
+  }
+}

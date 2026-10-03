@@ -17,7 +17,7 @@ function pageHtmlPlugin() {
 		transformIndexHtml: {
 			order: "pre",
 			async handler(html) {
-				const names = ["header", ...sections, "footer", "contact-modal"];
+				const names = ["header", ...sections, "footer", "cookie-banner", "contact-modal"];
 				const fragments = await Promise.all(names.map((name) =>
 					readFile(new URL(`./partials/${name}.html`, import.meta.url), "utf8"),
 				));

@@ -52,6 +52,7 @@ function markField(input, hasError) {
 function validateForm(form) {
   const nameInput = form.querySelector('input[name="name"]');
   const phoneInput = form.querySelector('input[name="phone"]');
+  const consentInput = form.querySelector('input[name="consent"]');
 
   if (!(nameInput instanceof HTMLInputElement) || !(phoneInput instanceof HTMLInputElement)) {
     return false;
@@ -70,6 +71,12 @@ function validateForm(form) {
 
   if (!isPhoneValid) {
     phoneInput.focus();
+    return false;
+  }
+
+  if (!(consentInput instanceof HTMLInputElement) || !consentInput.checked) {
+    consentInput?.reportValidity();
+    consentInput?.focus();
     return false;
   }
 

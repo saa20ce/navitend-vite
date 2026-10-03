@@ -64,7 +64,7 @@
 					</p>
 
 					<form data-contact-form data-doctor-modal-form data-form-source="doctor-modal"
-						class="flex flex-col md:flex-row mt-[24px] md:mt-[36px] md:gap-[24px]">
+						class="contact-form-inline mt-[24px] md:mt-[36px]">
 						<input type="hidden" name="doctor" data-doctor-name-field />
 						<div class="flex flex-col md:flex-row gap-[12px] lg:gap-[16px]">
 							<input type="text" name="name" placeholder="ФИО" required
@@ -74,16 +74,16 @@
 								class="h-[44px] border-0 rounded-[20px] bg-[#F6F6F6] px-[16px] text-[16px] text-[#4F4F4F] placeholder:text-[#9A9A9A] focus:outline-none focus:ring-2 focus:ring-[#FF7948]/30 lg:h-[52px] lg:text-[18px] lg:px-[16px] lg:py-[0px] lg:pt-[5px]" />
 						</div>
 
+						<label class="contact-consent">
+							<input type="checkbox" name="consent" value="true" required />
+							<span>Я даю <a href="#">согласие на обработку персональных данных</a><br />
+								и принимаю <a href="#">условия политики обработки.</a></span>
+						</label>
 						<button type="submit"
-							class="mt-[32px] md:mt-[0px] inline-flex h-[44px] w-full items-center justify-center rounded-[16px] lg:rounded-[20px] bg-[#FF7848] px-[18px] text-[16px] lg:text-[18px] font-[600] text-white transition-colors duration-200 hover:bg-[#FF946D] lg:h-[52px] lg:text-[18px] lg:py-0 lg:pt-[5px]">
+							class="inline-flex h-[44px] w-full items-center justify-center rounded-[16px] lg:rounded-[20px] bg-[#FF7848] px-[18px] text-[16px] lg:text-[18px] font-[600] text-white transition-colors duration-200 hover:bg-[#FF946D] lg:h-[52px] lg:text-[18px] lg:py-0 lg:pt-[5px]">
 							Заказать звонок
 						</button>
 					</form>
-					<p
-						class="mt-[14px] lg:mt-[16px] max-w-[510px] text-[12px] md:max-w-full leading-[1.28] text-[#8A8A8A] lg:mt-[18px] lg:text-[13px]">
-						Нажимая на кнопку, вы даете согласие на обработку персональных данных и соглашаетесь с
-						<a href="#" class="underline underline-offset-[3px]">политикой конфиденциальности</a>
-					</p>
 				</div>
 			</div>
 
