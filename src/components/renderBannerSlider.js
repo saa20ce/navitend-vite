@@ -38,6 +38,7 @@ function createMobileSlide(slide) {
         alt="${slide.imageAlt || ''}"
         loading="lazy"
         decoding="async"
+        width="360" height="369"
         class="absolute bottom-0 right-[0px] z-10 h-[180px] w-[180px] rounded-e-[20px]"
       />
     </article>
@@ -217,16 +218,18 @@ export function initBannerSlider(slides) {
 		});
 	}
 
+	function loadBannerImage(index, priority = 'auto') {
+		const image = getActiveTrack().querySelectorAll('[data-banner-image]')[index];
+		if (image && !image.getAttribute('src')) {
+			image.loading = 'eager';
+			image.fetchPriority = priority;
+			image.src = image.dataset.src;
+		}
+	}
+
 	function loadCurrentBannerImages() {
-		const images = getActiveTrack().querySelectorAll('[data-banner-image]');
-
-		[trackIndex, trackIndex + 1].forEach((index) => {
-			const image = images[index];
-
-			if (image && !image.getAttribute('src')) {
-				image.src = image.dataset.src;
-			}
-		});
+		// Only fetch the visible slide until the user starts interacting.
+		loadBannerImage(trackIndex, currentIndex === 0 ? 'high' : 'auto');
 	}
 
 	function renderMobileSlides() {
@@ -249,9 +252,9 @@ export function initBannerSlider(slides) {
 		bindSlideLinkGuards(desktopTrackEl);
 	}
 
-	function renderSlide() {
+	function renderSlide(withAnimation = true) {
 		renderDots();
-		updateTrackPosition(true);
+		updateTrackPosition(withAnimation);
 		loadCurrentBannerImages();
 	}
 
@@ -356,6 +359,8 @@ export function initBannerSlider(slides) {
 		dragOffset = 0;
 
 		getActiveTrack().style.transition = 'none';
+		loadBannerImage(trackIndex - 1);
+		loadBannerImage(trackIndex + 1);
 		stopAutoplay();
 	}
 
@@ -480,6 +485,6 @@ export function initBannerSlider(slides) {
 	renderMobileSlides();
 	renderTabletSlides();
 	renderDesktopSlides();
-	renderSlide();
+	renderSlide(false);
 	startAutoplay();
 }

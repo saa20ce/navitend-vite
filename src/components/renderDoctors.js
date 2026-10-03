@@ -12,7 +12,7 @@ export function createDoctorsCard({ id, surname, name, description, icon }, opti
     >
       <div class="flex flex-col flex-nowrap items-left">
         <div class="flex h-[110px] w-[110px] shrink-0 items-left justify-center lg:mb-[24px] lg:h-[140px] lg:w-[140px] ${imageWrapperClassName}">
-          <img src="${icon}" alt="" loading="lazy" decoding="async" class="w-auto" />
+          <img src="${icon}" alt="" width="280" height="280" loading="lazy" decoding="async" class="h-full w-auto" />
         </div>
 
         <div class="text-left text-base font-[600] leading-[150%] text-[#4F4F4F] lg:mb-[16px] lg:text-xl ${titleClassName}">

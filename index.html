@@ -5,13 +5,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="max-image-preview:none" />
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/lato-semibold-latin-cyrillic.woff2" crossorigin />
+  <link rel="preload" as="image" type="image/webp" href="/assets/HeroMob.webp" media="(width < 768px)" fetchpriority="high" />
+  <link rel="preload" as="image" type="image/webp" href="/assets/Hero.webp" media="(width >= 768px)" fetchpriority="high" />
   <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg" />
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon.png" />
   <title>Навидент</title>
 </head>
 
 <body class="bg-white font-['LatoLocal']">
-  <div id="app"></div>
+  <div id="app"><!-- app-html --></div>
 
   <script type="module" src="/src/main.js"></script>
 </body>
