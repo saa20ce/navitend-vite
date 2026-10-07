@@ -1,6 +1,29 @@
 @import "tailwindcss";
 @config "../../tailwind.config.js";
 
+@media (min-width: 1024px) {
+  #reviews .reviews-widget {
+    left: 24px;
+    width: calc(100% - 48px);
+  }
+}
+
+/* 1300px of cards plus room for both external arrow buttons. */
+@media (min-width: 1448px) {
+  #reviews {
+    overflow-x: clip;
+  }
+
+  #reviews .reviews-widget {
+    /* ReviewLab reserves 90px per side (80px controls + 10px card margin).
+       Its configured -20px left margin leaves 70px to offset on that side.
+       The widget's max-width: 100% keeps its width capped despite that margin.
+       Add both 90px gutters and align cards to the unpadded 1300px section. */
+    left: -70px;
+    width: calc(100% + 180px);
+  }
+}
+
 .contact-modal-title {
   @apply text-[22px] lg:text-[32px] font-[800] leading-[1.08] text-[#4F4F4F];
 }
