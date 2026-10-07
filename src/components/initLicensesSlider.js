@@ -42,7 +42,7 @@ export function initLicensesSlider(items) {
   const renderSlides = () => {
     track.innerHTML = items
       .map(
-        ({ src, alt }) => `
+        ({ src, previewSrc, previewSrcSet, width, height, alt }) => `
           <a
             href="${src}"
             target="_blank"
@@ -51,7 +51,7 @@ export function initLicensesSlider(items) {
             data-licenses-slide-link
           >
             <div class="flex h-[100%] items-center justify-center overflow-hidden bg-white">
-              <img data-licenses-image data-src="${src}" alt="${alt}" loading="lazy" decoding="async" class="h-full w-full object-contain" />
+              <img data-licenses-image data-src="${previewSrc}" data-srcset="${previewSrcSet}" width="${width}" height="${height}" alt="${alt}" decoding="async" class="h-full w-full object-contain" />
             </div>
           </a>
         `,
@@ -73,6 +73,7 @@ export function initLicensesSlider(items) {
 
     track.querySelectorAll(".licenses-slide").forEach((slide) => {
       slide.style.width = `${slideWidth}px`;
+      slide.querySelector("[data-licenses-image]").sizes = `${Math.ceil(slideWidth)}px`;
     });
   };
 
@@ -81,13 +82,17 @@ export function initLicensesSlider(items) {
       return;
     }
 
+    const firstImageIndex = Math.max(0, currentIndex - 1);
     const lastImageIndex = Math.min(items.length - 1, currentIndex + getVisibleCount());
 
     track.querySelectorAll("[data-licenses-image]").forEach((image, index) => {
-      if (index < currentIndex || index > lastImageIndex || image.getAttribute("src")) {
+      if (index < firstImageIndex || index > lastImageIndex || image.getAttribute("src")) {
         return;
       }
 
+      // IntersectionObserver already defers loading; native lazy loading here
+      // would delay visible slides and prevent preloading the adjacent slides.
+      image.srcset = image.dataset.srcset;
       image.src = image.dataset.src;
     });
   };

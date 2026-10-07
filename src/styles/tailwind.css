@@ -1,6 +1,11 @@
 @import "tailwindcss";
 @config "../../tailwind.config.js";
 
+html {
+  /* Keep the page width stable when a modal locks body scrolling. */
+  scrollbar-gutter: stable;
+}
+
 @media (min-width: 1024px) {
   #reviews .reviews-widget {
     left: 24px;
